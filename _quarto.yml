@@ -1,0 +1,24 @@
+project:
+  type: website
+
+website:
+  title: "Red-Black Tree Visualization"
+  navbar:
+    left:
+      - href: index.qmd
+        text: "Home <i class='fas fa-home'></i>"
+      - about.qmd
+      - red_black_tree.qmd
+      - tests.qmd
+      - visualization.qmd
+      - conclusion.qmd
+
+format:
+  html:
+    theme: 
+    - cosmo
+    - styles.scss
+    toc: true
+
+
+

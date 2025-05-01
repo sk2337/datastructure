@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Red-Black Tree Visualization - About</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Red-Black Tree Visualization</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home <i class="fas fa-home"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./about.html" rel="" target="" aria-current="page">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./red_black_tree.html" rel="" target="">
+ <span class="menu-text">Red-Black Tree Implementation</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./tests.html" rel="" target="">
+ <span class="menu-text">Unit Testing for Red-Black Tree</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./visualization.html" rel="" target="">
+ <span class="menu-text">Visualizations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conclusion.html" rel="" target="">
+ <span class="menu-text">Conclusion</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-objectives" id="toc-project-objectives" class="nav-link active" data-scroll-target="#project-objectives">Project Objectives</a></li>
+  <li><a href="#red-black-trees-in-depth" id="toc-red-black-trees-in-depth" class="nav-link" data-scroll-target="#red-black-trees-in-depth">Red-Black Trees in Depth</a></li>
+  <li><a href="#importance-of-visualization" id="toc-importance-of-visualization" class="nav-link" data-scroll-target="#importance-of-visualization">Importance of Visualization</a></li>
+  <li><a href="#red-black-tree-operations-and-their-complexity" id="toc-red-black-tree-operations-and-their-complexity" class="nav-link" data-scroll-target="#red-black-tree-operations-and-their-complexity">Red-Black Tree Operations and Their Complexity</a></li>
+  <li><a href="#application-of-red-black-trees" id="toc-application-of-red-black-trees" class="nav-link" data-scroll-target="#application-of-red-black-trees">Application of Red-Black Trees</a></li>
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features">Features</a></li>
+  <li><a href="#red-black-tree-visuals" id="toc-red-black-tree-visuals" class="nav-link" data-scroll-target="#red-black-tree-visuals">Red-Black Tree Visuals</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">About</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="project-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="project-objectives">Project Objectives</h3>
+<p>The primary objective of this project was to develop a comprehensive and interactive visualization tool for Red-Black Trees. This tool was built using <strong>Streamlit</strong>, <strong>NetworkX</strong>, and <strong>Matplotlib</strong>. The goal was not only to implement the Red-Black Tree structure itself but also to create a user-friendly interface that allows users to interact with the tree by inserting nodes and visualizing how the tree adjusts itself after each operation.</p>
+<p>By integrating explanations directly into the code, we aimed to make the algorithm more accessible to a broader audience, including those who might find tree rotations and balancing operations challenging to understand. This project aimed to bridge the gap between theoretical knowledge and practical visualization, enabling users to grasp the complexities of Red-Black Trees by visually observing their dynamics in real-time.</p>
+<hr>
+</section>
+<section id="red-black-trees-in-depth" class="level3">
+<h3 class="anchored" data-anchor-id="red-black-trees-in-depth">Red-Black Trees in Depth</h3>
+<p>A Red-Black Tree is a type of binary search tree where each node contains an extra bit of information called a color, which can either be <strong>red</strong> or <strong>black</strong>. This color information helps maintain balance in the tree by ensuring that certain properties are met during insertion and deletion operations. These properties include: 1. <strong>Root Property</strong>: The root is always black. 2. <strong>Leaf Property</strong>: All leaves (NIL nodes) are black. 3. <strong>Red Property</strong>: Red nodes cannot have red children, i.e., no two red nodes can be adjacent. 4. <strong>Black Property</strong>: Every path from a given node to its descendant NIL nodes must have the same number of black nodes.</p>
+<p>These properties ensure that the Red-Black Tree remains balanced and that the height of the tree is kept logarithmic in relation to the number of nodes. This ensures that search, insert, and delete operations all have a worst-case time complexity of <strong>O(log n)</strong>.</p>
+<hr>
+</section>
+<section id="importance-of-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="importance-of-visualization">Importance of Visualization</h3>
+<p>One of the most challenging aspects of understanding Red-Black Trees is visualizing how the tree balances itself after every insertion or deletion. The tree undergoes various <strong>rotations</strong> and <strong>color flips</strong>, and without an intuitive visualization, it can be difficult for someone to follow these changes and understand how the tree maintains its properties.</p>
+<p>The interactive visualization built in this project addresses this challenge by allowing users to: 1. <strong>Insert values</strong>: Users can insert nodes into the Red-Black Tree and immediately see how the tree adjusts itself. 2. <strong>Step-by-step updates</strong>: The tree can be updated step-by-step, allowing users to follow the changes made at each stage of the insertion process, such as node rotations and color changes. 3. <strong>Real-time balancing visualization</strong>: With each insertion, users can observe how the tree maintains its balance, ensuring that the height remains logarithmic and the Red-Black Tree properties are preserved.</p>
+<p>This interactive feature is particularly useful for educational purposes, as it enables users to learn not only how Red-Black Trees function but also why they work the way they do. It provides a dynamic and hands-on approach to understanding complex tree structures.</p>
+<hr>
+</section>
+<section id="red-black-tree-operations-and-their-complexity" class="level3">
+<h3 class="anchored" data-anchor-id="red-black-tree-operations-and-their-complexity">Red-Black Tree Operations and Their Complexity</h3>
+<p>Red-Black Trees are designed to be balanced, with every operation—whether insertion, deletion, or search—having <strong>O(log n)</strong> time complexity. This is because the Red-Black Tree ensures that the tree remains balanced at all times. In the worst case, the height of the tree is proportional to the logarithm of the number of nodes, which guarantees that all operations will be completed in logarithmic time.</p>
+<p>The two most significant operations in a Red-Black Tree are: 1. <strong>Insertion</strong>: When a new node is added to the tree, it is initially inserted as a red node. After insertion, the tree may violate some Red-Black properties, such as having two consecutive red nodes. These violations are fixed using rotations (either left or right) and color flips to restore balance. 2. <strong>Deletion</strong>: Deleting a node from a Red-Black Tree is more complex than insertion because it may require multiple rotations and color changes to maintain the tree’s balance. The tree ensures that the Red-Black properties are upheld even after a node is removed.</p>
+<p>Both of these operations rely on the properties of the Red-Black Tree to guarantee logarithmic height and maintain balance, ensuring that the tree performs efficiently even with large datasets.</p>
+<hr>
+</section>
+<section id="application-of-red-black-trees" class="level3">
+<h3 class="anchored" data-anchor-id="application-of-red-black-trees">Application of Red-Black Trees</h3>
+<p>Red-Black Trees are used in a wide range of applications where fast and efficient data retrieval is essential. Some of the notable use cases include: - <strong>Database Indexing</strong>: Many database management systems use Red-Black Trees to implement indexing structures, ensuring that data can be retrieved quickly even with a large volume of records. - <strong>Memory Management</strong>: Red-Black Trees are used in operating systems for memory allocation and deallocation, as they provide an efficient way to manage free and used memory blocks. - <strong>Priority Queues</strong>: Red-Black Trees can be used to implement priority queues, where elements are inserted in a way that allows for fast retrieval of the highest-priority element.</p>
+<p>These use cases highlight the importance of Red-Black Trees in systems that require fast, efficient, and balanced data structures to support real-time operations.</p>
+<hr>
+</section>
+<section id="features" class="level2">
+<h2 class="anchored" data-anchor-id="features">Features</h2>
+<ul>
+<li><strong>Interactive Insertion</strong>: Insert values into the Red-Black Tree and see how the tree adjusts itself.</li>
+<li><strong>Step-by-Step Insertion</strong>: Use a checkbox to visualize tree changes step by step for each insertion.</li>
+<li><strong>In-Order Traversal</strong>: View the in-order traversal of the tree to ensure it’s balanced and sorted.</li>
+</ul>
+<hr>
+</section>
+<section id="red-black-tree-visuals" class="level2">
+<h2 class="anchored" data-anchor-id="red-black-tree-visuals">Red-Black Tree Visuals</h2>
+<p>The visualization is built using <strong>NetworkX</strong> and <strong>Matplotlib</strong>, with the following features: 1. <strong>Tree Structure</strong>: The tree is displayed with nodes and edges. Each node is labeled with its key, and the edges represent the parent-child relationships. 2. <strong>Node Colors</strong>: Nodes are colored based on their Red-Black Tree color (red or black). 3. <strong>Rotations and Balancing</strong>: As values are inserted, the visualization dynamically updates the tree to reflect any rotations or color changes needed to maintain balance.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

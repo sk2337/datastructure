@@ -1,0 +1,97 @@
+---
+title: "Unit Testing for Red-Black Tree"
+code-fold: true
+embed-resources: true
+---
+
+This file (`tests.py`) includes a basic test case to verify the correctness of Red-Black Tree insertion.
+
+<details>
+  <summary>Click to view code</summary>
+  
+```python
+import unittest
+from .red_black_tree import RedBlackTree
+
+class TestRedBlackTree(unittest.TestCase):
+    
+    def test_insert(self):
+        tree = RedBlackTree()
+        tree.insert(10)
+        tree.insert(20)
+        tree.insert(30)
+        
+        # Check if the tree maintains its structure and balancing after insertion
+        self.assertEqual(tree.inorder_helper(tree.root), [10, 20, 30])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+</details>
+
+---
+
+### `test_insert()`
+- Tests the basic insertion operation. It inserts three values (10, 20, 30) into the Red-Black Tree and verifies the tree's structure using an in-order traversal.
+
+---
+
+## Importing Libraries and Class
+
+<details>
+  <summary>Click to view code</summary>
+
+```python
+"""
+import unittest
+from .red_black_tree import RedBlackTree
+"""
+```
+</details>
+
+**Explanation**:
+- `unittest`: Python's built-in unit testing framework.
+- `RedBlackTree`: The class we're testing, imported from the local module.
+
+---
+
+## Unit Test Class
+
+<details>
+  <summary>Click to view code</summary>
+
+```python
+"""
+class TestRedBlackTree(unittest.TestCase):
+    def test_insert(self):
+        tree = RedBlackTree()
+        tree.insert(10)
+        tree.insert(20)
+        tree.insert(30)
+        
+        self.assertEqual(tree.inorder_helper(tree.root), [10, 20, 30])
+"""
+```
+</details>
+
+**Explanation**:
+- Defines a test case to insert a few values into the tree and check whether the in-order traversal returns a sorted list.
+
+---
+
+## Running the Tests
+
+<details>
+  <summary>Click to view code</summary>
+
+```python
+"""
+if __name__ == '__main__':
+    unittest.main()
+"""
+```
+</details>
+
+**Explanation**:
+- Ensures that the test runs when this file is executed directly.
+

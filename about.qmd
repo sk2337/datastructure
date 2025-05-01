@@ -1,0 +1,74 @@
+---
+title: "About"
+---
+
+### Project Objectives
+
+The primary objective of this project was to develop a comprehensive and interactive visualization tool for Red-Black Trees. This tool was built using **Streamlit**, **NetworkX**, and **Matplotlib**. The goal was not only to implement the Red-Black Tree structure itself but also to create a user-friendly interface that allows users to interact with the tree by inserting nodes and visualizing how the tree adjusts itself after each operation.
+
+By integrating explanations directly into the code, we aimed to make the algorithm more accessible to a broader audience, including those who might find tree rotations and balancing operations challenging to understand. This project aimed to bridge the gap between theoretical knowledge and practical visualization, enabling users to grasp the complexities of Red-Black Trees by visually observing their dynamics in real-time.
+
+---
+
+### Red-Black Trees in Depth
+
+A Red-Black Tree is a type of binary search tree where each node contains an extra bit of information called a color, which can either be **red** or **black**. This color information helps maintain balance in the tree by ensuring that certain properties are met during insertion and deletion operations. These properties include:
+1. **Root Property**: The root is always black.
+2. **Leaf Property**: All leaves (NIL nodes) are black.
+3. **Red Property**: Red nodes cannot have red children, i.e., no two red nodes can be adjacent.
+4. **Black Property**: Every path from a given node to its descendant NIL nodes must have the same number of black nodes.
+
+These properties ensure that the Red-Black Tree remains balanced and that the height of the tree is kept logarithmic in relation to the number of nodes. This ensures that search, insert, and delete operations all have a worst-case time complexity of **O(log n)**.
+
+---
+
+### Importance of Visualization
+
+One of the most challenging aspects of understanding Red-Black Trees is visualizing how the tree balances itself after every insertion or deletion. The tree undergoes various **rotations** and **color flips**, and without an intuitive visualization, it can be difficult for someone to follow these changes and understand how the tree maintains its properties.
+
+The interactive visualization built in this project addresses this challenge by allowing users to:
+1. **Insert values**: Users can insert nodes into the Red-Black Tree and immediately see how the tree adjusts itself.
+2. **Step-by-step updates**: The tree can be updated step-by-step, allowing users to follow the changes made at each stage of the insertion process, such as node rotations and color changes.
+3. **Real-time balancing visualization**: With each insertion, users can observe how the tree maintains its balance, ensuring that the height remains logarithmic and the Red-Black Tree properties are preserved.
+
+This interactive feature is particularly useful for educational purposes, as it enables users to learn not only how Red-Black Trees function but also why they work the way they do. It provides a dynamic and hands-on approach to understanding complex tree structures.
+
+---
+
+### Red-Black Tree Operations and Their Complexity
+
+Red-Black Trees are designed to be balanced, with every operation—whether insertion, deletion, or search—having **O(log n)** time complexity. This is because the Red-Black Tree ensures that the tree remains balanced at all times. In the worst case, the height of the tree is proportional to the logarithm of the number of nodes, which guarantees that all operations will be completed in logarithmic time.
+
+The two most significant operations in a Red-Black Tree are:
+1. **Insertion**: When a new node is added to the tree, it is initially inserted as a red node. After insertion, the tree may violate some Red-Black properties, such as having two consecutive red nodes. These violations are fixed using rotations (either left or right) and color flips to restore balance.
+2. **Deletion**: Deleting a node from a Red-Black Tree is more complex than insertion because it may require multiple rotations and color changes to maintain the tree’s balance. The tree ensures that the Red-Black properties are upheld even after a node is removed.
+
+Both of these operations rely on the properties of the Red-Black Tree to guarantee logarithmic height and maintain balance, ensuring that the tree performs efficiently even with large datasets.
+
+---
+
+### Application of Red-Black Trees
+
+Red-Black Trees are used in a wide range of applications where fast and efficient data retrieval is essential. Some of the notable use cases include:
+- **Database Indexing**: Many database management systems use Red-Black Trees to implement indexing structures, ensuring that data can be retrieved quickly even with a large volume of records.
+- **Memory Management**: Red-Black Trees are used in operating systems for memory allocation and deallocation, as they provide an efficient way to manage free and used memory blocks.
+- **Priority Queues**: Red-Black Trees can be used to implement priority queues, where elements are inserted in a way that allows for fast retrieval of the highest-priority element.
+
+These use cases highlight the importance of Red-Black Trees in systems that require fast, efficient, and balanced data structures to support real-time operations.
+
+---
+
+## Features
+
+- **Interactive Insertion**: Insert values into the Red-Black Tree and see how the tree adjusts itself.
+- **Step-by-Step Insertion**: Use a checkbox to visualize tree changes step by step for each insertion.
+- **In-Order Traversal**: View the in-order traversal of the tree to ensure it's balanced and sorted.
+
+---
+
+## Red-Black Tree Visuals
+
+The visualization is built using **NetworkX** and **Matplotlib**, with the following features:
+1. **Tree Structure**: The tree is displayed with nodes and edges. Each node is labeled with its key, and the edges represent the parent-child relationships.
+2. **Node Colors**: Nodes are colored based on their Red-Black Tree color (red or black).
+3. **Rotations and Balancing**: As values are inserted, the visualization dynamically updates the tree to reflect any rotations or color changes needed to maintain balance.

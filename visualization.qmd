@@ -1,0 +1,169 @@
+---
+title: "Visualizations"
+code-fold: true
+embed-resources: true
+---
+
+::: {.iframe-container}
+<iframe src="https://your-visualization-url.com" width="100%" height="500px" frameborder="0"></iframe>
+:::
+
+This file contains the code for visualizing the Red-Black Tree using **Streamlit** for the interactive interface and **NetworkX** for graphing the tree structure.
+
+#### `visualize_tree(tree)`
+- This function generates a visual representation of the Red-Black Tree using **NetworkX** to create a directed graph.
+- It uses **Matplotlib** to display the tree as a graph, where nodes represent tree elements, and edges represent the parent-child relationships.
+- The tree is drawn with node labels, and we use a blue color for nodes.
+
+#### `main()`
+- The main function creates a Streamlit app that allows users to interact with the Red-Black Tree.
+- Users can input values to insert into the tree, and the tree updates visually in real-time.
+- The app also includes the following features:
+  - **Insert Button**: Inserts a new node into the Red-Black Tree and updates the visualization.
+  - **Step-by-Step Insertion**: A checkbox that allows users to visualize each insertion step-by-step.
+  - **In-Order Traversal**: A button to display the in-order traversal of the tree, showing the keys in sorted order.
+
+---
+
+<details>
+  <summary>Click to view code</summary>
+
+```python
+import streamlit as st
+import networkx as nx
+import matplotlib.pyplot as plt
+from .red_black_tree import RedBlackTree
+
+def visualize_tree(tree):
+    G = nx.DiGraph()
+    tree.build_graph(G)
+    pos = nx.spring_layout(G)
+    
+    plt.figure(figsize=(10, 6))
+    nx.draw(G, pos, with_labels=True, node_size=3000, node_color='lightblue', font_size=10, font_color='black')
+    plt.title("Red-Black Tree Visualization")
+    plt.show()
+
+def main():
+    st.title('Red-Black Tree Visualization')
+    st.write("""
+        This is an interactive Red-Black Tree visualization project. 
+        You can insert values into the tree and watch how it balances and updates.
+    """)
+
+    # Create the Red-Black Tree instance
+    tree = RedBlackTree()
+    
+    # Input field for inserting values
+    value = st.number_input('Enter Value to Insert:', min_value=1, value=0, step=1)
+
+    # Insert Button
+    if st.button('Insert'):
+        if value != 0:
+            tree.insert(value)
+            st.write(f"Value {value} inserted into the tree.")
+            visualize_tree(tree)
+        else:
+            st.write("Please enter a non-zero value.")
+    
+    # Step-by-step visualization option
+    step = st.checkbox('Enable Step-by-Step Insertion', value=False)
+    if step:
+        st.write("Insert values step by step to visualize tree changes one by one.")
+
+    # Show In-Order Traversal
+    if st.button('Show In-Order Traversal'):
+        in_order = tree.inorder_helper(tree.root)
+        st.write(f"In-Order Traversal: {in_order}")
+```
+</details>
+
+## Importing Required Libraries
+
+<details>
+  <summary>Click to view code</summary>
+
+```python
+"""
+import streamlit as st
+import networkx as nx
+import matplotlib.pyplot as plt
+from .red_black_tree import RedBlackTree
+"""
+```
+</details>
+
+**Explanation**:
+- `streamlit`: Used to create the web interface for user interaction.
+- `networkx`: Used to represent and manipulate the tree as a graph.
+- `matplotlib.pyplot`: Used for rendering the graph visually.
+- `red_black_tree`: Imports the Red-Black Tree class for managing the tree structure.
+
+---
+
+## Tree Visualization Function
+
+<details>
+  <summary>Click to view code</summary>
+
+```python
+"""
+def visualize_tree(tree):
+    G = nx.DiGraph()
+    tree.build_graph(G)
+    pos = nx.spring_layout(G)  # Positioning the nodes
+    
+    plt.figure(figsize=(10, 6))
+    nx.draw(G, pos, with_labels=True, node_size=3000, node_color='lightblue', font_size=10, font_color='black')
+    plt.title("Red-Black Tree Visualization")
+    plt.show()
+"""
+```
+</details>
+
+**Explanation**:
+- This function generates a visual representation of the Red-Black Tree.
+- It uses NetworkX to build a graph and matplotlib to render it with labeled nodes and a styled layout.
+
+---
+
+## Main Streamlit App
+
+<details>
+  <summary>Click to view code</summary>
+
+```python
+"""
+def main():
+    st.title('Red-Black Tree Visualization')
+    st.write("""
+        This is an interactive Red-Black Tree visualization project. 
+        You can insert values into the tree and watch how it balances and updates.
+    """)
+
+    tree = RedBlackTree()
+
+    value = st.number_input('Enter Value to Insert:', min_value=1, value=0, step=1)
+
+    if st.button('Insert'):
+        if value != 0:
+            tree.insert(value)
+            st.write(f"Value {value} inserted into the tree.")
+            visualize_tree(tree)
+        else:
+            st.write("Please enter a non-zero value.")
+
+    step = st.checkbox('Enable Step-by-Step Insertion', value=False)
+    if step:
+        st.write("Insert values step by step to visualize tree changes one by one.")
+
+    if st.button('Show In-Order Traversal'):
+        in_order = tree.inorder_helper(tree.root)
+        st.write(f"In-Order Traversal: {in_order}")
+"""
+```
+</details>
+
+**Explanation**:
+- This function creates a complete Streamlit app that lets users interactively build and visualize a Red-Black Tree.
+- Users can insert values, choose to see the tree change step-by-step, and view an in-order traversal.
