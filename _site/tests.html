@@ -4474,7 +4474,6 @@ vertical-align: -.125em;
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -4496,7 +4495,7 @@ vertical-align: -.125em;
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html" rel target>
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Home <i class="fas fa-home"></i></span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html" rel target>
@@ -4504,7 +4503,7 @@ vertical-align: -.125em;
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./red_black_tree.html" rel target>
- <span class="menu-text">Red-Black Tree</span></a>
+ <span class="menu-text">Red-Black Tree Implementation</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./tests.html" rel target aria-current="page">
@@ -4512,7 +4511,7 @@ vertical-align: -.125em;
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./visualization.html" rel target>
- <span class="menu-text">Visualizations</span></a>
+ <span class="menu-text">Streamlit Visualization for Red‑Black Tree</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./conclusion.html" rel target>
@@ -4536,7 +4535,7 @@ vertical-align: -.125em;
   <ul>
   <li><a href="#test_insert" id="toc-test_insert" class="nav-link active" data-scroll-target="#test_insert"><code>test_insert()</code></a></li>
   <li><a href="#importing-libraries-and-class" id="toc-importing-libraries-and-class" class="nav-link" data-scroll-target="#importing-libraries-and-class">Importing Libraries and Class</a></li>
-  <li><a href="#unit-test-class" id="toc-unit-test-class" class="nav-link" data-scroll-target="#unit-test-class">Unit Test Class</a></li>
+  <li><a href="#test-class-structure" id="toc-test-class-structure" class="nav-link" data-scroll-target="#test-class-structure">Test Class Structure</a></li>
   <li><a href="#running-the-tests" id="toc-running-the-tests" class="nav-link" data-scroll-target="#running-the-tests">Running the Tests</a></li>
   </ul>
 </nav>
@@ -4567,7 +4566,7 @@ vertical-align: -.125em;
 Click to view code
 </summary>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unittest</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .red_black_tree <span class="im">import</span> RedBlackTree</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> red_black_tree <span class="im">import</span> RedBlackTree</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TestRedBlackTree(unittest.TestCase):</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -4579,64 +4578,60 @@ Click to view code
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Check if the tree maintains its structure and balancing after insertion</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.assertEqual(tree.inorder_helper(tree.root), [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>])</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    unittest.main()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.assertEqual(tree.root.color, <span class="st">&#39;black&#39;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    unittest.main()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <hr>
-<section id="test_insert" class="level3">
-<h3 class="anchored" data-anchor-id="test_insert"><code>test_insert()</code></h3>
+<section id="test_insert" class="level2">
+<h2 class="anchored" data-anchor-id="test_insert"><code>test_insert()</code></h2>
 <ul>
-<li>Tests the basic insertion operation. It inserts three values (10, 20, 30) into the Red-Black Tree and verifies the tree’s structure using an in-order traversal.</li>
+<li><strong>Purpose</strong>:<br>
+Validates that inserting multiple values maintains both the binary-search‐tree order and the Red‑Black color invariants.<br>
+</li>
+<li><strong>Checks</strong>:
+<ol type="1">
+<li><strong>Order</strong>: Verifies that an in‑order traversal returns the sorted list <code>[10, 20, 30]</code>.<br>
+</li>
+<li><strong>Root color</strong>: Asserts that after all insertions, the root node is colored black (<code>&#39;black&#39;</code>).</li>
+</ol></li>
 </ul>
 <hr>
 </section>
 <section id="importing-libraries-and-class" class="level2">
 <h2 class="anchored" data-anchor-id="importing-libraries-and-class">Importing Libraries and Class</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">import unittest</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">from .red_black_tree import RedBlackTree</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - <code>unittest</code>: Python’s built-in unit testing framework. - <code>RedBlackTree</code>: The class we’re testing, imported from the local module.</p>
+<ul>
+<li><code>unittest</code><br>
+Python’s built‑in framework for writing and running tests.<br>
+</li>
+<li><code>RedBlackTree</code><br>
+The class under test, imported from <code>red_black_tree.py</code>.</li>
+</ul>
 <hr>
 </section>
-<section id="unit-test-class" class="level2">
-<h2 class="anchored" data-anchor-id="unit-test-class">Unit Test Class</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">class TestRedBlackTree(unittest.TestCase):</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    def test_insert(self):</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">        tree = RedBlackTree()</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">        tree.insert(10)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">        tree.insert(20)</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">        tree.insert(30)</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">        self.assertEqual(tree.inorder_helper(tree.root), [10, 20, 30])</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - Defines a test case to insert a few values into the tree and check whether the in-order traversal returns a sorted list.</p>
+<section id="test-class-structure" class="level2">
+<h2 class="anchored" data-anchor-id="test-class-structure">Test Class Structure</h2>
+<ul>
+<li><strong><code>TestRedBlackTree</code></strong><br>
+Inherits from <code>unittest.TestCase</code>.<br>
+</li>
+<li><strong><code>test_insert</code></strong><br>
+A method within that class which sets up the tree, performs insertions, and asserts the expected outcomes.</li>
+</ul>
 <hr>
 </section>
 <section id="running-the-tests" class="level2">
 <h2 class="anchored" data-anchor-id="running-the-tests">Running the Tests</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">if __name__ == &#39;__main__&#39;:</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    unittest.main()</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - Ensures that the test runs when this file is executed directly.</p>
+<p>From your project’s root directory, execute:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> unittest tests.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">----------------------------------------------------------------------</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Ran</span> 1 test in 0.00Xs</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">OK</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If something fails, unittest will print a detailed traceback and a “FAIL” summary.</p>
 
 
 </section>

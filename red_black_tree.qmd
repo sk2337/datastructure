@@ -1,23 +1,35 @@
 ---
 title: "Red-Black Tree Implementation"
-code-fold: true
+format:
+    html:
+        code-fold: true
 embed-resources: true
 ---
 
-#### `RedBlackNode` class
-The `RedBlackNode` class represents a node in the Red-Black Tree. Each node has:
-- `key`: the value stored in the node.
-- `color`: the node's color, either 'red' or 'black'.
-- `left`, `right`: pointers to the left and right children.
-- `parent`: pointer to the node's parent.
+#### `RedBlackNode` class  
+The `RedBlackNode` class represents a single node in the tree. Each node stores:
+- **`key`**: the integer value held by the node.  
+- **`color`**: either `'red'` or `'black'`, used to enforce balancing rules.  
+- **`left`, `right`**: references to child nodes (or sentinel `TNULL`).  
+- **`parent`**: reference to the parent node.
+
+---
 
 #### `RedBlackTree` class
-This class implements the Red-Black Tree. It includes several methods to manage the tree:
-- **`insert(key)`**: Inserts a new node with the specified key into the tree, maintaining the Red-Black Tree properties. It uses rotations and color changes to keep the tree balanced.
-- **`rotate_left(x)` and `rotate_right(x)`**: Perform left and right rotations to maintain the tree's balance during insertion.
-- **`fix_insert(k)`**: This method ensures the Red-Black Tree properties are maintained after insertion by fixing violations using rotations and color changes.
-- **`inorder_helper(node)`**: A helper function to perform an in-order traversal of the tree, returning a sorted list of keys.
-- **`build_graph(G)`**: Builds a graph representation of the tree, which will be visualized later using `NetworkX`.
+
+The `RedBlackTree` encapsulates all operations for insertion, balancing, traversal, and graph building. Key methods include:
+
+- **__init__()**: initializes the tree with a sentinel leaf TNULL colored black and sets root = TNULL.
+
+- **insert(key)**: standard BST insert (new node colored red) followed by a call to fix_insert to restore Red‑Black properties.
+
+- **fix_insert(k)**: enforces Red‑Black invariants after insertion using recoloring and rotations.
+
+- **rotate_left(x)** / rotate_right(x): atomic tree rotations preserving BST order.
+
+- **inorder_helper(node)**: returns a sorted list of keys via in‑order traversal.
+
+- **build_graph(G) & _build_graph_helper(node, G)**: constructs a NetworkX graph for visualization.
 
 <details>
   <summary>Click to view code</summary>
@@ -165,223 +177,40 @@ class RedBlackTree:
 
 ---
 
-## RedBlackNode Class
-
-<details>
-  <summary>Click to view code</summary>
-
-```python
-"""
-class RedBlackNode:
-    def __init__(self, key):
-        self.key = key
-        self.color = 'red'  # New nodes are red initially
-        self.left = None
-        self.right = None
-        self.parent = None
-"""
-```
-</details>
-
----
-
-## RedBlackTree Constructor
-
-<details>
-  <summary>Click to view code</summary>
-
-```python
-"""
-class RedBlackTree:
-    def __init__(self):
-        self.TNULL = RedBlackNode(0)  # Sentinel node (used for leaves)
-        self.TNULL.color = 'black'    # The sentinel node is always black
-        self.root = self.TNULL         # Root is initially set to TNULL
-"""
-```
-</details>
-
-**Explanation**:
-- The `RedBlackTree` class is the main structure that implements the Red-Black Tree.
-- It includes a sentinel node, `TNULL`, which is used for all leaf nodes in the tree. This node is always colored black.
-- The `root` is initialized as `TNULL`, meaning that the tree is empty when first created.
-
----
-
 ## Left and Right Rotations
 
-<details>
-  <summary>Click to view code</summary>
+**rotate_left(x) / rotate_right(x)**
 
-```python
-"""
-    def rotate_left(self, x):
-        y = x.right
-        x.right = y.left
-        if y.left != self.TNULL:
-            y.left.parent = x
-        y.parent = x.parent
-        if x.parent == None:
-            self.root = y
-        elif x == x.parent.left:
-            x.parent.left = y
-        else:
-            x.parent.right = y
-        y.left = x
-        x.parent = y
-"""
-```
-</details>
-
-**Explanation**:
-- This method performs a **left rotation** on a given node `x`. 
-- After the rotation, the original node `x` becomes the left child of its right child `y`, and `y` becomes the parent of `x`.
+These methods perform local rotations to restore tree balance while preserving in-order key order. Left rotation pivots x with its right child; right rotation pivots with the left child.
 
 ---
 
 ## Fixing Insertions
 
-<details>
-  <summary>Click to view code</summary>
+**fix_insert(k)**
 
-```python
-"""
-    def fix_insert(self, k):
-        while k.parent.color == 'red':
-            if k.parent == k.parent.parent.left:
-                u = k.parent.parent.right
-                if u.color == 'red':
-                    u.color = 'black'
-                    k.parent.color = 'black'
-                    k.parent.parent.color = 'red'
-                    k = k.parent.parent
-                else:
-                    if k == k.parent.right:
-                        k = k.parent
-                        self.rotate_left(k)
-                    k.parent.color = 'black'
-                    k.parent.parent.color = 'red'
-                    self.rotate_right(k.parent.parent)
-            else:
-                u = k.parent.parent.left
-                if u.color == 'red':
-                    u.color = 'black'
-                    k.parent.color = 'black'
-                    k.parent.parent.color = 'red'
-                    k = k.parent.parent
-                else:
-                    if k == k.parent.left:
-                        k = k.parent
-                        self.rotate_right(k)
-                    k.parent.color = 'black'
-                    k.parent.parent.color = 'red'
-                    self.rotate_left(k.parent.parent)
-            if k == self.root:
-                break
-        self.root.color = 'black'
-"""
-```
-</details>
-
-**Explanation**:
-- Fixes violations of Red-Black Tree properties after an insertion by performing color changes and rotations.
+After inserting a red node, fix_insert traverses up, fixing red-red violations through recoloring or rotations until the tree satisfies all Red-Black properties
 
 ---
 
 ## Inserting a Node
 
-<details>
-  <summary>Click to view code</summary>
+**insert(key)**
 
-```python
-"""
-    def insert(self, key):
-        node = RedBlackNode(key)
-        node.parent = None
-        node.key = key
-        node.left = self.TNULL
-        node.right = self.TNULL
-        node.color = 'red'
-
-        y = None
-        x = self.root
-
-        while x != self.TNULL:
-            y = x
-            if node.key < x.key:
-                x = x.left
-            else:
-                x = x.right
-
-        node.parent = y
-        if y == None:
-            self.root = node
-        elif node.key < y.key:
-            y.left = node
-        else:
-            y.right = node
-
-        if node.parent == None:
-            node.color = 'black'
-            return
-
-        if node.parent.parent == None:
-            return
-
-        self.fix_insert(node)
-"""
-```
-</details>
-
-**Explanation**:
-- This function inserts a new node in the tree and then fixes any Red-Black Tree violations caused by the insertion.
+Performs a standard BST insert, marks the new node red, then calls fix_insert so the tree remains balanced.
 
 ---
 
 ## In-Order Traversal
 
-<details>
-  <summary>Click to view code</summary>
+**inorder_helper(node)**
 
-```python
-"""
-    def inorder_helper(self, node):
-        if node == self.TNULL:
-            return []
-        return self.inorder_helper(node.left) + [node.key] + self.inorder_helper(node.right)
-"""
-```
-</details>
-
-**Explanation**:
-- Performs an in-order traversal and returns a list of node keys in sorted order.
+Recursively collects node keys in sorted order via in-order traversal.
 
 ---
 
 ## Building the Graph for Visualization
 
-<details>
-  <summary>Click to view code</summary>
+**build_graph(G) & _build_graph_helper(node, G)**
 
-```python
-"""
-    def build_graph(self, G):
-        if self.root == self.TNULL:
-            return
-        self._build_graph_helper(self.root, G)
-
-    def _build_graph_helper(self, node, G):
-        if node == self.TNULL:
-            return
-        if node.left != self.TNULL:
-            G.add_edge(node.key, node.left.key)
-        if node.right != self.TNULL:
-            G.add_edge(node.key, node.right.key)
-        self._build_graph_helper(node.left, G)
-        self._build_graph_helper(node.right, G)
-"""
-```
-</details>
-
-**Explanation**:
-- Recursively builds a NetworkX graph from the tree for visualization purposes.
+Depth-first walk that builds a NetworkX graph, tagging each node with its color for visualization.

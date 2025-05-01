@@ -1,6 +1,8 @@
 ---
 title: "Unit Testing for Red-Black Tree"
-code-fold: true
+format:
+    html:
+        code-fold: true
 embed-resources: true
 ---
 
@@ -11,7 +13,7 @@ This file (`tests.py`) includes a basic test case to verify the correctness of R
   
 ```python
 import unittest
-from .red_black_tree import RedBlackTree
+from red_black_tree import RedBlackTree
 
 class TestRedBlackTree(unittest.TestCase):
     
@@ -23,6 +25,7 @@ class TestRedBlackTree(unittest.TestCase):
         
         # Check if the tree maintains its structure and balancing after insertion
         self.assertEqual(tree.inorder_helper(tree.root), [10, 20, 30])
+        self.assertEqual(tree.root.color, 'black')
 
 if __name__ == '__main__':
     unittest.main()
@@ -31,67 +34,50 @@ if __name__ == '__main__':
 
 ---
 
-### `test_insert()`
-- Tests the basic insertion operation. It inserts three values (10, 20, 30) into the Red-Black Tree and verifies the tree's structure using an in-order traversal.
+## `test_insert()`
+
+- **Purpose**:  
+  Validates that inserting multiple values maintains both the binary-search‐tree order and the Red‑Black color invariants.  
+- **Checks**:  
+  1. **Order**: Verifies that an in‑order traversal returns the sorted list `[10, 20, 30]`.  
+  2. **Root color**: Asserts that after all insertions, the root node is colored black (`'black'`).
 
 ---
 
 ## Importing Libraries and Class
 
-<details>
-  <summary>Click to view code</summary>
-
-```python
-"""
-import unittest
-from .red_black_tree import RedBlackTree
-"""
-```
-</details>
-
-**Explanation**:
-- `unittest`: Python's built-in unit testing framework.
-- `RedBlackTree`: The class we're testing, imported from the local module.
+- `unittest`  
+  Python’s built‑in framework for writing and running tests.  
+- `RedBlackTree`  
+  The class under test, imported from `red_black_tree.py`.
 
 ---
 
-## Unit Test Class
+## Test Class Structure
 
-<details>
-  <summary>Click to view code</summary>
-
-```python
-"""
-class TestRedBlackTree(unittest.TestCase):
-    def test_insert(self):
-        tree = RedBlackTree()
-        tree.insert(10)
-        tree.insert(20)
-        tree.insert(30)
-        
-        self.assertEqual(tree.inorder_helper(tree.root), [10, 20, 30])
-"""
-```
-</details>
-
-**Explanation**:
-- Defines a test case to insert a few values into the tree and check whether the in-order traversal returns a sorted list.
+- **`TestRedBlackTree`**  
+  Inherits from `unittest.TestCase`.  
+- **`test_insert`**  
+  A method within that class which sets up the tree, performs insertions, and asserts the expected outcomes.
 
 ---
 
 ## Running the Tests
 
-<details>
-  <summary>Click to view code</summary>
+From your project’s root directory, execute:
 
-```python
-"""
-if __name__ == '__main__':
-    unittest.main()
-"""
+```bash
+python -m unittest tests.py
 ```
-</details>
 
-**Explanation**:
-- Ensures that the test runs when this file is executed directly.
+You should see:
 
+```bash
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.00Xs
+
+OK
+```
+
+If something fails, unittest will print a detailed traceback and a “FAIL” summary.

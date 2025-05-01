@@ -61,7 +61,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -83,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Home <i class="fas fa-home"></i></span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html" rel="" target="">
@@ -99,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./visualization.html" rel="" target="">
- <span class="menu-text">Visualizations</span></a>
+ <span class="menu-text">Streamlit Visualization for Red‑Black Tree</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./conclusion.html" rel="" target="" aria-current="page">
@@ -121,8 +120,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#project-objectives" id="toc-project-objectives" class="nav-link active" data-scroll-target="#project-objectives">Project Objectives</a></li>
-  <li><a href="#challenges-and-future-improvements" id="toc-challenges-and-future-improvements" class="nav-link" data-scroll-target="#challenges-and-future-improvements">Challenges and Future Improvements</a></li>
+  <li><a href="#project-reflections" id="toc-project-reflections" class="nav-link active" data-scroll-target="#project-reflections">Project Reflections</a></li>
+  <li><a href="#areas-for-future-development" id="toc-areas-for-future-development" class="nav-link" data-scroll-target="#areas-for-future-development">Areas for Future Development</a></li>
   <li><a href="#final-thoughts" id="toc-final-thoughts" class="nav-link" data-scroll-target="#final-thoughts">Final Thoughts</a></li>
   </ul>
 </nav>
@@ -147,21 +146,23 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>In this project, we explored the fundamental concepts of <strong>Red-Black Trees</strong>, which are a type of self-balancing binary search tree that plays a crucial role in various real-world applications, particularly where fast search, insertion, and deletion operations are required. Red-Black Trees are widely used in computer science, including in operating systems, database management systems, and various data structures libraries, due to their ability to maintain logarithmic depth, which ensures that operations…</p>
-<section id="project-objectives" class="level3">
-<h3 class="anchored" data-anchor-id="project-objectives">Project Objectives</h3>
-<p>The primary objective of this project was to develop a comprehensive and interactive visualization tool for Red-Black Trees. This tool was built using <strong>Streamlit</strong>, <strong>NetworkX</strong>, and <strong>Matplotlib</strong>. The goal was not only to implement the Red-Black Tree structure itself but also to create a user-friendly interface that allows users to interact with the tree by inserting nodes and visualizing how the tree adjusts itself after each operation.</p>
-<p>By integrating explanations directly into the code, we aimed to make the algorithm more accessible to a broader audience, including those who might find tree rotations and balancing operations challenging to understand. This project aimed to bridge the gap between theoretical knowledge and practical visualization, enabling users to grasp the complexities of Red-Black Trees by visually observing their dynamics in real-time.</p>
+<p>Through this project, we delved into <strong>Red-Black Trees</strong>, exploring their key concepts and highlighting their practical significance in computer science applications, particularly for efficient searching, inserting, and deleting operations. The primary goal was to develop an interactive visualization tool using <strong>Streamlit</strong>, <strong>NetworkX</strong>, and <strong>Matplotlib</strong>, aiming to make complex balancing operations intuitive and accessible.</p>
+<section id="project-reflections" class="level3">
+<h3 class="anchored" data-anchor-id="project-reflections">Project Reflections</h3>
+<p>This visualization tool effectively bridges theoretical understanding and practical application. By enabling interactive node insertion and dynamic visual feedback, the tool provides a clear view into the internal workings of Red-Black Trees. Integrating explanations directly into the code further enhances clarity and user comprehension.</p>
 </section>
-<section id="challenges-and-future-improvements" class="level3">
-<h3 class="anchored" data-anchor-id="challenges-and-future-improvements">Challenges and Future Improvements</h3>
-<p>While the project successfully demonstrates how Red-Black Trees function and how their operations are visualized, there are several areas for future improvement: 1. <strong>Deletion Visualization</strong>: Although the current project focuses on insertions and rotations, adding deletion functionality to the visualization would further enrich the understanding of Red-Black Trees. 2. <strong>Performance Benchmarks</strong>: The current app allows for visualizing the tree’s structure, but incorporating performance benchmarks that compare the efficiency of Red-Black Trees to other data structures (like AVL Trees or simple Binary Search Trees) would provide additional insights into their performance. 3. <strong>Advanced User Interaction</strong>: Enhancing the user interface to allow users to manipulate the tree, such as by dragging nodes or manually adjusting the tree’s structure, could provide a more interactive experience.</p>
+<section id="areas-for-future-development" class="level3">
+<h3 class="anchored" data-anchor-id="areas-for-future-development">Areas for Future Development</h3>
+<p>Moving forward, several improvements could enhance the project’s educational value:</p>
+<ol type="1">
+<li><strong>Deletion Operations</strong>: Extending visualization capabilities to cover node deletion would provide a more comprehensive learning experience.</li>
+<li><strong>Performance Analysis</strong>: Incorporating comparative benchmarks with other data structures (like AVL Trees) could deepen user understanding of efficiency differences.</li>
+<li><strong>Enhanced User Interaction</strong>: Allowing users to manipulate nodes directly through drag-and-drop interactions could significantly improve engagement.</li>
+</ol>
 </section>
 <section id="final-thoughts" class="level3">
 <h3 class="anchored" data-anchor-id="final-thoughts">Final Thoughts</h3>
-<p>Overall, this project serves as an excellent introduction to Red-Black Trees and provides a comprehensive visualization tool that aids in understanding how these self-balancing trees maintain their structure. By combining theoretical explanations with interactive visualizations, the project bridges the gap between understanding Red-Black Trees as abstract concepts and applying them in practical scenarios.</p>
-<p>The ability to visually track how a Red-Black Tree balances itself with every insertion makes this project a valuable educational resource for anyone learning about data structures. In the future, expanding this project to include deletion, performance comparisons, and enhanced interactivity could further enrich the learning experience for users.</p>
-<p>In conclusion, this project not only demonstrates the mechanics of Red-Black Trees but also highlights the power of visualizing complex algorithms and their real-world applications in a way that makes them more accessible to a broad audience.</p>
+<p>Overall, this project serves as an engaging introduction to Red-Black Trees, illustrating their functionality and emphasizing the importance of visualization in learning complex data structures. By clearly demonstrating the tree’s balancing mechanics through interactive visualizations, the project makes a challenging topic approachable and engaging for learners.</p>
 
 
 </section>

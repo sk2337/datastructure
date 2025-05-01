@@ -2,93 +2,93 @@
   {
     "objectID": "visualization.html",
     "href": "visualization.html",
-    "title": "Visualizations",
+    "title": "Streamlit Visualization for Red‑Black Tree",
     "section": "",
-    "text": "This file contains the code for visualizing the Red-Black Tree using Streamlit for the interactive interface and NetworkX for graphing the tree structure."
+    "text": "Builds a NetworkX graph from the Red‑Black Tree and renders it in Streamlit using Matplotlib.\n- Graph construction: Adds each node (key + color) and edges (parent→child).\n- Layout: Uses spring_layout with a fixed seed for reproducible positioning.\n- Rendering: Draws nodes red or black, white labels, and embeds the figure with st.pyplot.\n\n\nClick to view code\n\ndef visualize_tree(tree):\n    G = nx.DiGraph()\n    tree.build_graph(G)\n    if not G.nodes:\n        st.warning(\"Tree is empty!\")\n        return\n\n    pos = nx.spring_layout(G, seed=42)\n    fig, ax = plt.subplots(figsize=(10,6))\n    colors = ['red' if G.nodes[n]['color']=='red' else 'black' for n in G.nodes]\n    nx.draw(G, pos, ax=ax, with_labels=True, node_color=colors,\n            node_size=1500, font_color='white',\n            edgecolors='black', linewidths=1, arrows=False)\n    ax.set_title(\"Red‑Black Tree\")\n    st.pyplot(fig)\n    plt.close(fig)\n\ndef main():\n    st.title(\"Red‑Black Tree\")\n\n    # persist state\n    if 'tree' not in st.session_state:\n        st.session_state.tree = RedBlackTree()\n\n    tree = st.session_state.tree\n\n    # input controls\n    val = st.number_input(\"Value to insert\", min_value=1, value=1, step=1)\n    step_mode = st.checkbox(\"Enable Step‑by‑Step\")\n\n    c1, c2 = st.columns(2)\n    with c1:\n        if st.button(\"Insert\"):\n            tree.insert(val)\n            if not step_mode:\n                tree.fix_insert(tree.last_inserted)\n            else:\n                # prime step generator\n                st.session_state.steps = list(tree.fix_insert_steps(tree.last_inserted))\n                st.session_state.step_idx = 0\n\n    with c2:\n        if step_mode and st.button(\"Next\"):\n            idx = st.session_state.step_idx\n            if idx &lt; len(st.session_state.steps):\n                action, node = st.session_state.steps[idx]\n                st.info(f\"{action} on {node.key}\")\n                st.session_state.step_idx += 1\n\n    if st.button(\"Clear\"):\n        st.session_state.tree = RedBlackTree()\n\n    visualize_tree(tree)\n\n    if st.button(\"Show In‑Order\"):\n        st.write(tree.inorder_helper(tree.root))\n\nif __name__=='__main__':\n    main()\n&lt;/details&gt;"
   },
   {
     "objectID": "visualization.html#importing-required-libraries",
     "href": "visualization.html#importing-required-libraries",
     "title": "Visualizations",
     "section": "Importing Required Libraries",
-    "text": "Importing Required Libraries\n\n\nClick to view code\n\n\"\"\"\nimport streamlit as st\nimport networkx as nx\nimport matplotlib.pyplot as plt\nfrom .red_black_tree import RedBlackTree\n\"\"\"\n\nExplanation: - streamlit: Used to create the web interface for user interaction. - networkx: Used to represent and manipulate the tree as a graph. - matplotlib.pyplot: Used for rendering the graph visually. - red_black_tree: Imports the Red-Black Tree class for managing the tree structure."
+    "text": "Importing Required Libraries\nExplanation: - streamlit: Used to create the web interface for user interaction. - networkx: Used to represent and manipulate the tree as a graph. - matplotlib.pyplot: Used for rendering the graph visually. - red_black_tree: Imports the Red-Black Tree class for managing the tree structure."
   },
   {
     "objectID": "visualization.html#tree-visualization-function",
     "href": "visualization.html#tree-visualization-function",
     "title": "Visualizations",
     "section": "Tree Visualization Function",
-    "text": "Tree Visualization Function\n\n\nClick to view code\n\n\"\"\"\ndef visualize_tree(tree):\n    G = nx.DiGraph()\n    tree.build_graph(G)\n    pos = nx.spring_layout(G)  # Positioning the nodes\n    \n    plt.figure(figsize=(10, 6))\n    nx.draw(G, pos, with_labels=True, node_size=3000, node_color='lightblue', font_size=10, font_color='black')\n    plt.title(\"Red-Black Tree Visualization\")\n    plt.show()\n\"\"\"\n\nExplanation: - This function generates a visual representation of the Red-Black Tree. - It uses NetworkX to build a graph and matplotlib to render it with labeled nodes and a styled layout."
+    "text": "Tree Visualization Function\nExplanation: - This function generates a visual representation of the Red-Black Tree. - It uses NetworkX to build a graph and matplotlib to render it with labeled nodes and a styled layout."
   },
   {
     "objectID": "visualization.html#main-streamlit-app",
     "href": "visualization.html#main-streamlit-app",
     "title": "Visualizations",
     "section": "Main Streamlit App",
-    "text": "Main Streamlit App\n\n\nClick to view code\n\n\"\"\"\ndef main():\n    st.title('Red-Black Tree Visualization')\n    st.write(\"\"\"\n        This is an interactive Red-Black Tree visualization project. \n        You can insert values into the tree and watch how it balances and updates.\n    \"\"\")\n\n    tree = RedBlackTree()\n\n    value = st.number_input('Enter Value to Insert:', min_value=1, value=0, step=1)\n\n    if st.button('Insert'):\n        if value != 0:\n            tree.insert(value)\n            st.write(f\"Value {value} inserted into the tree.\")\n            visualize_tree(tree)\n        else:\n            st.write(\"Please enter a non-zero value.\")\n\n    step = st.checkbox('Enable Step-by-Step Insertion', value=False)\n    if step:\n        st.write(\"Insert values step by step to visualize tree changes one by one.\")\n\n    if st.button('Show In-Order Traversal'):\n        in_order = tree.inorder_helper(tree.root)\n        st.write(f\"In-Order Traversal: {in_order}\")\n\"\"\"\n\nExplanation: - This function creates a complete Streamlit app that lets users interactively build and visualize a Red-Black Tree. - Users can insert values, choose to see the tree change step-by-step, and view an in-order traversal."
+    "text": "Main Streamlit App\nExplanation: - This function creates a complete Streamlit app that lets users interactively build and visualize a Red-Black Tree. - Users can insert values, choose to see the tree change step-by-step, and view an in-order traversal."
   },
   {
     "objectID": "conclusion.html",
     "href": "conclusion.html",
     "title": "Conclusion",
     "section": "",
-    "text": "In this project, we explored the fundamental concepts of Red-Black Trees, which are a type of self-balancing binary search tree that plays a crucial role in various real-world applications, particularly where fast search, insertion, and deletion operations are required. Red-Black Trees are widely used in computer science, including in operating systems, database management systems, and various data structures libraries, due to their ability to maintain logarithmic depth, which ensures that operations…\n\nProject Objectives\nThe primary objective of this project was to develop a comprehensive and interactive visualization tool for Red-Black Trees. This tool was built using Streamlit, NetworkX, and Matplotlib. The goal was not only to implement the Red-Black Tree structure itself but also to create a user-friendly interface that allows users to interact with the tree by inserting nodes and visualizing how the tree adjusts itself after each operation.\nBy integrating explanations directly into the code, we aimed to make the algorithm more accessible to a broader audience, including those who might find tree rotations and balancing operations challenging to understand. This project aimed to bridge the gap between theoretical knowledge and practical visualization, enabling users to grasp the complexities of Red-Black Trees by visually observing their dynamics in real-time.\n\n\nChallenges and Future Improvements\nWhile the project successfully demonstrates how Red-Black Trees function and how their operations are visualized, there are several areas for future improvement: 1. Deletion Visualization: Although the current project focuses on insertions and rotations, adding deletion functionality to the visualization would further enrich the understanding of Red-Black Trees. 2. Performance Benchmarks: The current app allows for visualizing the tree’s structure, but incorporating performance benchmarks that compare the efficiency of Red-Black Trees to other data structures (like AVL Trees or simple Binary Search Trees) would provide additional insights into their performance. 3. Advanced User Interaction: Enhancing the user interface to allow users to manipulate the tree, such as by dragging nodes or manually adjusting the tree’s structure, could provide a more interactive experience.\n\n\nFinal Thoughts\nOverall, this project serves as an excellent introduction to Red-Black Trees and provides a comprehensive visualization tool that aids in understanding how these self-balancing trees maintain their structure. By combining theoretical explanations with interactive visualizations, the project bridges the gap between understanding Red-Black Trees as abstract concepts and applying them in practical scenarios.\nThe ability to visually track how a Red-Black Tree balances itself with every insertion makes this project a valuable educational resource for anyone learning about data structures. In the future, expanding this project to include deletion, performance comparisons, and enhanced interactivity could further enrich the learning experience for users.\nIn conclusion, this project not only demonstrates the mechanics of Red-Black Trees but also highlights the power of visualizing complex algorithms and their real-world applications in a way that makes them more accessible to a broad audience."
+    "text": "Through this project, we delved into Red-Black Trees, exploring their key concepts and highlighting their practical significance in computer science applications, particularly for efficient searching, inserting, and deleting operations. The primary goal was to develop an interactive visualization tool using Streamlit, NetworkX, and Matplotlib, aiming to make complex balancing operations intuitive and accessible.\n\nProject Reflections\nThis visualization tool effectively bridges theoretical understanding and practical application. By enabling interactive node insertion and dynamic visual feedback, the tool provides a clear view into the internal workings of Red-Black Trees. Integrating explanations directly into the code further enhances clarity and user comprehension.\n\n\nAreas for Future Development\nMoving forward, several improvements could enhance the project’s educational value:\n\nDeletion Operations: Extending visualization capabilities to cover node deletion would provide a more comprehensive learning experience.\nPerformance Analysis: Incorporating comparative benchmarks with other data structures (like AVL Trees) could deepen user understanding of efficiency differences.\nEnhanced User Interaction: Allowing users to manipulate nodes directly through drag-and-drop interactions could significantly improve engagement.\n\n\n\nFinal Thoughts\nOverall, this project serves as an engaging introduction to Red-Black Trees, illustrating their functionality and emphasizing the importance of visualization in learning complex data structures. By clearly demonstrating the tree’s balancing mechanics through interactive visualizations, the project makes a challenging topic approachable and engaging for learners."
   },
   {
     "objectID": "red_black_tree.html",
     "href": "red_black_tree.html",
     "title": "Red-Black Tree Implementation",
     "section": "",
-    "text": "The RedBlackNode class represents a node in the Red-Black Tree. Each node has: - key: the value stored in the node. - color: the node’s color, either ‘red’ or ‘black’. - left, right: pointers to the left and right children. - parent: pointer to the node’s parent.\n\n\n\nThis class implements the Red-Black Tree. It includes several methods to manage the tree: - insert(key): Inserts a new node with the specified key into the tree, maintaining the Red-Black Tree properties. It uses rotations and color changes to keep the tree balanced. - rotate_left(x) and rotate_right(x): Perform left and right rotations to maintain the tree’s balance during insertion. - fix_insert(k): This method ensures the Red-Black Tree properties are maintained after insertion by fixing violations using rotations and color changes. - inorder_helper(node): A helper function to perform an in-order traversal of the tree, returning a sorted list of keys. - build_graph(G): Builds a graph representation of the tree, which will be visualized later using NetworkX.\n\n\nClick to view code\n\nclass RedBlackNode:\n    def __init__(self, key):\n        self.key = key\n        self.color = 'red'  # New nodes are red initially\n        self.left = None\n        self.right = None\n        self.parent = None\n\nclass RedBlackTree:\n    def __init__(self):\n        self.TNULL = RedBlackNode(0)  # Sentinel node (used for leaves)\n        self.TNULL.color = 'black'\n        self.root = self.TNULL\n    \n    def rotate_left(self, x):\n        # Perform left rotation\n        y = x.right\n        x.right = y.left\n        if y.left != self.TNULL:\n            y.left.parent = x\n        y.parent = x.parent\n        if x.parent == None:\n            self.root = y\n        elif x == x.parent.left:\n            x.parent.left = y\n        else:\n            x.parent.right = y\n        y.left = x\n        x.parent = y\n    \n    def rotate_right(self, x):\n        # Perform right rotation\n        y = x.left\n        x.left = y.right\n        if y.right != self.TNULL:\n            y.right.parent = x\n        y.parent = x.parent\n        if x.parent == None:\n            self.root = y\n        elif x == x.parent.right:\n            x.parent.right = y\n        else:\n            x.parent.left = y\n        y.right = x\n        x.parent = y\n\n    def fix_insert(self, k):\n        # Fix the Red-Black Tree after an insertion\n        while k.parent.color == 'red':\n            if k.parent == k.parent.parent.left:\n                u = k.parent.parent.right\n                if u.color == 'red':\n                    u.color = 'black'\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    k = k.parent.parent\n                else:\n                    if k == k.parent.right:\n                        k = k.parent\n                        self.rotate_left(k)\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    self.rotate_right(k.parent.parent)\n            else:\n                u = k.parent.parent.left\n                if u.color == 'red':\n                    u.color = 'black'\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    k = k.parent.parent\n                else:\n                    if k == k.parent.left:\n                        k = k.parent\n                        self.rotate_right(k)\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    self.rotate_left(k.parent.parent)\n            if k == self.root:\n                break\n        self.root.color = 'black'\n\n    def insert(self, key):\n        # Insert a new node with the given key\n        node = RedBlackNode(key)\n        node.parent = None\n        node.key = key\n        node.left = self.TNULL\n        node.right = self.TNULL\n        node.color = 'red'\n\n        y = None\n        x = self.root\n\n        while x != self.TNULL:\n            y = x\n            if node.key &lt; x.key:\n                x = x.left\n            else:\n                x = x.right\n\n        node.parent = y\n        if y == None:\n            self.root = node\n        elif node.key &lt; y.key:\n            y.left = node\n        else:\n            y.right = node\n        \n        if node.parent == None:\n            node.color = 'black'\n            return\n        \n        if node.parent.parent == None:\n            return\n        \n        self.fix_insert(node)\n    \n    def inorder_helper(self, node):\n        if node == self.TNULL:\n            return []\n        return self.inorder_helper(node.left) + [node.key] + self.inorder_helper(node.right)\n\n    def build_graph(self, G):\n        # Build a graph from the Red-Black Tree nodes\n        if self.root == self.TNULL:\n            return\n        self._build_graph_helper(self.root, G)\n\n    def _build_graph_helper(self, node, G):\n        if node == self.TNULL:\n            return\n        if node.left != self.TNULL:\n            G.add_edge(node.key, node.left.key)\n        if node.right != self.TNULL:\n            G.add_edge(node.key, node.right.key)\n        self._build_graph_helper(node.left, G)\n        self._build_graph_helper(node.right, G)\n\n\n\n\n\n\n\nClick to view code\n\n\"\"\"\nclass RedBlackNode:\n    def __init__(self, key):\n        self.key = key\n        self.color = 'red'  # New nodes are red initially\n        self.left = None\n        self.right = None\n        self.parent = None\n\"\"\"\n\n\n\n\n\n\n\nClick to view code\n\n\"\"\"\nclass RedBlackTree:\n    def __init__(self):\n        self.TNULL = RedBlackNode(0)  # Sentinel node (used for leaves)\n        self.TNULL.color = 'black'    # The sentinel node is always black\n        self.root = self.TNULL         # Root is initially set to TNULL\n\"\"\"\n\nExplanation: - The RedBlackTree class is the main structure that implements the Red-Black Tree. - It includes a sentinel node, TNULL, which is used for all leaf nodes in the tree. This node is always colored black. - The root is initialized as TNULL, meaning that the tree is empty when first created.\n\n\n\n\n\n\nClick to view code\n\n\"\"\"\n    def rotate_left(self, x):\n        y = x.right\n        x.right = y.left\n        if y.left != self.TNULL:\n            y.left.parent = x\n        y.parent = x.parent\n        if x.parent == None:\n            self.root = y\n        elif x == x.parent.left:\n            x.parent.left = y\n        else:\n            x.parent.right = y\n        y.left = x\n        x.parent = y\n\"\"\"\n\nExplanation: - This method performs a left rotation on a given node x. - After the rotation, the original node x becomes the left child of its right child y, and y becomes the parent of x.\n\n\n\n\n\n\nClick to view code\n\n\"\"\"\n    def fix_insert(self, k):\n        while k.parent.color == 'red':\n            if k.parent == k.parent.parent.left:\n                u = k.parent.parent.right\n                if u.color == 'red':\n                    u.color = 'black'\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    k = k.parent.parent\n                else:\n                    if k == k.parent.right:\n                        k = k.parent\n                        self.rotate_left(k)\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    self.rotate_right(k.parent.parent)\n            else:\n                u = k.parent.parent.left\n                if u.color == 'red':\n                    u.color = 'black'\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    k = k.parent.parent\n                else:\n                    if k == k.parent.left:\n                        k = k.parent\n                        self.rotate_right(k)\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    self.rotate_left(k.parent.parent)\n            if k == self.root:\n                break\n        self.root.color = 'black'\n\"\"\"\n\nExplanation: - Fixes violations of Red-Black Tree properties after an insertion by performing color changes and rotations.\n\n\n\n\n\n\nClick to view code\n\n\"\"\"\n    def insert(self, key):\n        node = RedBlackNode(key)\n        node.parent = None\n        node.key = key\n        node.left = self.TNULL\n        node.right = self.TNULL\n        node.color = 'red'\n\n        y = None\n        x = self.root\n\n        while x != self.TNULL:\n            y = x\n            if node.key &lt; x.key:\n                x = x.left\n            else:\n                x = x.right\n\n        node.parent = y\n        if y == None:\n            self.root = node\n        elif node.key &lt; y.key:\n            y.left = node\n        else:\n            y.right = node\n\n        if node.parent == None:\n            node.color = 'black'\n            return\n\n        if node.parent.parent == None:\n            return\n\n        self.fix_insert(node)\n\"\"\"\n\nExplanation: - This function inserts a new node in the tree and then fixes any Red-Black Tree violations caused by the insertion.\n\n\n\n\n\n\nClick to view code\n\n\"\"\"\n    def inorder_helper(self, node):\n        if node == self.TNULL:\n            return []\n        return self.inorder_helper(node.left) + [node.key] + self.inorder_helper(node.right)\n\"\"\"\n\nExplanation: - Performs an in-order traversal and returns a list of node keys in sorted order.\n\n\n\n\n\n\nClick to view code\n\n\"\"\"\n    def build_graph(self, G):\n        if self.root == self.TNULL:\n            return\n        self._build_graph_helper(self.root, G)\n\n    def _build_graph_helper(self, node, G):\n        if node == self.TNULL:\n            return\n        if node.left != self.TNULL:\n            G.add_edge(node.key, node.left.key)\n        if node.right != self.TNULL:\n            G.add_edge(node.key, node.right.key)\n        self._build_graph_helper(node.left, G)\n        self._build_graph_helper(node.right, G)\n\"\"\"\n\nExplanation: - Recursively builds a NetworkX graph from the tree for visualization purposes."
+    "text": "The RedBlackNode class represents a single node in the tree. Each node stores: - key: the integer value held by the node.\n- color: either 'red' or 'black', used to enforce balancing rules.\n- left, right: references to child nodes (or sentinel TNULL).\n- parent: reference to the parent node."
   },
   {
     "objectID": "red_black_tree.html#redblacknode-class-1",
     "href": "red_black_tree.html#redblacknode-class-1",
     "title": "Red-Black Tree Implementation",
-    "section": "",
-    "text": "Click to view code\n\n\"\"\"\nclass RedBlackNode:\n    def __init__(self, key):\n        self.key = key\n        self.color = 'red'  # New nodes are red initially\n        self.left = None\n        self.right = None\n        self.parent = None\n\"\"\""
+    "section": "RedBlackNode Class",
+    "text": "RedBlackNode Class\n\n\nClick to view code\n\n\"\"\"\nclass RedBlackNode:\n    def __init__(self, key):\n        self.key = key\n        self.color = 'red'  # New nodes are red initially\n        self.left = None\n        self.right = None\n        self.parent = None\n\"\"\""
   },
   {
     "objectID": "red_black_tree.html#redblacktree-constructor",
     "href": "red_black_tree.html#redblacktree-constructor",
     "title": "Red-Black Tree Implementation",
-    "section": "",
-    "text": "Click to view code\n\n\"\"\"\nclass RedBlackTree:\n    def __init__(self):\n        self.TNULL = RedBlackNode(0)  # Sentinel node (used for leaves)\n        self.TNULL.color = 'black'    # The sentinel node is always black\n        self.root = self.TNULL         # Root is initially set to TNULL\n\"\"\"\n\nExplanation: - The RedBlackTree class is the main structure that implements the Red-Black Tree. - It includes a sentinel node, TNULL, which is used for all leaf nodes in the tree. This node is always colored black. - The root is initialized as TNULL, meaning that the tree is empty when first created."
+    "section": "RedBlackTree Constructor",
+    "text": "RedBlackTree Constructor\n\n\nClick to view code\n\n\"\"\"\nclass RedBlackTree:\n    def __init__(self):\n        self.TNULL = RedBlackNode(0)  # Sentinel node (used for leaves)\n        self.TNULL.color = 'black'    # The sentinel node is always black\n        self.root = self.TNULL         # Root is initially set to TNULL\n\"\"\"\n\nExplanation: - The RedBlackTree class is the main structure that implements the Red-Black Tree. - It includes a sentinel node, TNULL, which is used for all leaf nodes in the tree. This node is always colored black. - The root is initialized as TNULL, meaning that the tree is empty when first created."
   },
   {
     "objectID": "red_black_tree.html#left-and-right-rotations",
     "href": "red_black_tree.html#left-and-right-rotations",
     "title": "Red-Black Tree Implementation",
-    "section": "",
-    "text": "Click to view code\n\n\"\"\"\n    def rotate_left(self, x):\n        y = x.right\n        x.right = y.left\n        if y.left != self.TNULL:\n            y.left.parent = x\n        y.parent = x.parent\n        if x.parent == None:\n            self.root = y\n        elif x == x.parent.left:\n            x.parent.left = y\n        else:\n            x.parent.right = y\n        y.left = x\n        x.parent = y\n\"\"\"\n\nExplanation: - This method performs a left rotation on a given node x. - After the rotation, the original node x becomes the left child of its right child y, and y becomes the parent of x."
+    "section": "Left and Right Rotations",
+    "text": "Left and Right Rotations\nrotate_left(x) / rotate_right(x)\nThese methods perform local rotations to restore tree balance while preserving in-order key order. Left rotation pivots x with its right child; right rotation pivots with the left child."
   },
   {
     "objectID": "red_black_tree.html#fixing-insertions",
     "href": "red_black_tree.html#fixing-insertions",
     "title": "Red-Black Tree Implementation",
-    "section": "",
-    "text": "Click to view code\n\n\"\"\"\n    def fix_insert(self, k):\n        while k.parent.color == 'red':\n            if k.parent == k.parent.parent.left:\n                u = k.parent.parent.right\n                if u.color == 'red':\n                    u.color = 'black'\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    k = k.parent.parent\n                else:\n                    if k == k.parent.right:\n                        k = k.parent\n                        self.rotate_left(k)\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    self.rotate_right(k.parent.parent)\n            else:\n                u = k.parent.parent.left\n                if u.color == 'red':\n                    u.color = 'black'\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    k = k.parent.parent\n                else:\n                    if k == k.parent.left:\n                        k = k.parent\n                        self.rotate_right(k)\n                    k.parent.color = 'black'\n                    k.parent.parent.color = 'red'\n                    self.rotate_left(k.parent.parent)\n            if k == self.root:\n                break\n        self.root.color = 'black'\n\"\"\"\n\nExplanation: - Fixes violations of Red-Black Tree properties after an insertion by performing color changes and rotations."
+    "section": "Fixing Insertions",
+    "text": "Fixing Insertions\nfix_insert(k)\nAfter inserting a red node, fix_insert traverses up, fixing red-red violations through recoloring or rotations until the tree satisfies all Red-Black properties"
   },
   {
     "objectID": "red_black_tree.html#inserting-a-node",
     "href": "red_black_tree.html#inserting-a-node",
     "title": "Red-Black Tree Implementation",
-    "section": "",
-    "text": "Click to view code\n\n\"\"\"\n    def insert(self, key):\n        node = RedBlackNode(key)\n        node.parent = None\n        node.key = key\n        node.left = self.TNULL\n        node.right = self.TNULL\n        node.color = 'red'\n\n        y = None\n        x = self.root\n\n        while x != self.TNULL:\n            y = x\n            if node.key &lt; x.key:\n                x = x.left\n            else:\n                x = x.right\n\n        node.parent = y\n        if y == None:\n            self.root = node\n        elif node.key &lt; y.key:\n            y.left = node\n        else:\n            y.right = node\n\n        if node.parent == None:\n            node.color = 'black'\n            return\n\n        if node.parent.parent == None:\n            return\n\n        self.fix_insert(node)\n\"\"\"\n\nExplanation: - This function inserts a new node in the tree and then fixes any Red-Black Tree violations caused by the insertion."
+    "section": "Inserting a Node",
+    "text": "Inserting a Node\ninsert(key)\nPerforms a standard BST insert, marks the new node red, then calls fix_insert so the tree remains balanced."
   },
   {
     "objectID": "red_black_tree.html#in-order-traversal",
     "href": "red_black_tree.html#in-order-traversal",
     "title": "Red-Black Tree Implementation",
-    "section": "",
-    "text": "Click to view code\n\n\"\"\"\n    def inorder_helper(self, node):\n        if node == self.TNULL:\n            return []\n        return self.inorder_helper(node.left) + [node.key] + self.inorder_helper(node.right)\n\"\"\"\n\nExplanation: - Performs an in-order traversal and returns a list of node keys in sorted order."
+    "section": "In-Order Traversal",
+    "text": "In-Order Traversal\ninorder_helper(node)\nRecursively collects node keys in sorted order via in-order traversal."
   },
   {
     "objectID": "red_black_tree.html#building-the-graph-for-visualization",
     "href": "red_black_tree.html#building-the-graph-for-visualization",
     "title": "Red-Black Tree Implementation",
-    "section": "",
-    "text": "Click to view code\n\n\"\"\"\n    def build_graph(self, G):\n        if self.root == self.TNULL:\n            return\n        self._build_graph_helper(self.root, G)\n\n    def _build_graph_helper(self, node, G):\n        if node == self.TNULL:\n            return\n        if node.left != self.TNULL:\n            G.add_edge(node.key, node.left.key)\n        if node.right != self.TNULL:\n            G.add_edge(node.key, node.right.key)\n        self._build_graph_helper(node.left, G)\n        self._build_graph_helper(node.right, G)\n\"\"\"\n\nExplanation: - Recursively builds a NetworkX graph from the tree for visualization purposes."
+    "section": "Building the Graph for Visualization",
+    "text": "Building the Graph for Visualization\n**build_graph(G) & _build_graph_helper(node, G)**\nDepth-first walk that builds a NetworkX graph, tagging each node with its color for visualization."
   },
   {
     "objectID": "tests.html",
@@ -102,49 +102,49 @@
     "href": "tests.html#importing-libraries-and-class",
     "title": "Unit Testing for Red-Black Tree",
     "section": "Importing Libraries and Class",
-    "text": "Importing Libraries and Class\n\n\nClick to view code\n\n\"\"\"\nimport unittest\nfrom .red_black_tree import RedBlackTree\n\"\"\"\n\nExplanation: - unittest: Python’s built-in unit testing framework. - RedBlackTree: The class we’re testing, imported from the local module."
+    "text": "Importing Libraries and Class\n\nunittest\nPython’s built‑in framework for writing and running tests.\n\nRedBlackTree\nThe class under test, imported from red_black_tree.py."
   },
   {
     "objectID": "tests.html#unit-test-class",
     "href": "tests.html#unit-test-class",
     "title": "Unit Testing for Red-Black Tree",
     "section": "Unit Test Class",
-    "text": "Unit Test Class\n\n\nClick to view code\n\n\"\"\"\nclass TestRedBlackTree(unittest.TestCase):\n    def test_insert(self):\n        tree = RedBlackTree()\n        tree.insert(10)\n        tree.insert(20)\n        tree.insert(30)\n        \n        self.assertEqual(tree.inorder_helper(tree.root), [10, 20, 30])\n\"\"\"\n\nExplanation: - Defines a test case to insert a few values into the tree and check whether the in-order traversal returns a sorted list."
+    "text": "Unit Test Class\nExplanation: - Defines a test case to insert a few values into the tree and check whether the in-order traversal returns a sorted list."
   },
   {
     "objectID": "tests.html#running-the-tests",
     "href": "tests.html#running-the-tests",
     "title": "Unit Testing for Red-Black Tree",
     "section": "Running the Tests",
-    "text": "Running the Tests\n\n\nClick to view code\n\n\"\"\"\nif __name__ == '__main__':\n    unittest.main()\n\"\"\"\n\nExplanation: - Ensures that the test runs when this file is executed directly."
+    "text": "Running the Tests\nFrom your project’s root directory, execute:\npython -m unittest tests.py\nYou should see:\n.\n----------------------------------------------------------------------\nRan 1 test in 0.00Xs\n\nOK\nIf something fails, unittest will print a detailed traceback and a “FAIL” summary."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Red-Black Tree Visualization Project",
     "section": "",
-    "text": "This project provides an interactive Red-Black Tree visualization using Streamlit, NetworkX, and Matplotlib. A Red-Black Tree is a type of self-balancing binary search tree that ensures efficient searching, insertion, and deletion operations. This project focuses on helping users understand Red-Black Trees by visualizing their operations step-by-step, including insertions, rotations, and balancing."
+    "text": "This project delivers an interactive Red‑Black Tree visualization using Streamlit, NetworkX, and Matplotlib. A Red‑Black Tree is a self‑balancing binary search tree that guarantees (O(n)) time complexity for searches, insertions, and deletions by enforcing simple color and rotation rules. The visualization highlights each insertion, rotation, and recoloring step in real time, clarifying how the tree restores its red‑black properties and maintains balance.\n\n\n\nA balanced red‑black tree"
   },
   {
     "objectID": "index.html#overview",
     "href": "index.html#overview",
     "title": "Red-Black Tree Visualization Project",
     "section": "",
-    "text": "This project provides an interactive Red-Black Tree visualization using Streamlit, NetworkX, and Matplotlib. A Red-Black Tree is a type of self-balancing binary search tree that ensures efficient searching, insertion, and deletion operations. This project focuses on helping users understand Red-Black Trees by visualizing their operations step-by-step, including insertions, rotations, and balancing."
+    "text": "This project delivers an interactive Red‑Black Tree visualization using Streamlit, NetworkX, and Matplotlib. A Red‑Black Tree is a self‑balancing binary search tree that guarantees (O(n)) time complexity for searches, insertions, and deletions by enforcing simple color and rotation rules. The visualization highlights each insertion, rotation, and recoloring step in real time, clarifying how the tree restores its red‑black properties and maintains balance.\n\n\n\nA balanced red‑black tree"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "The primary objective of this project was to develop a comprehensive and interactive visualization tool for Red-Black Trees. This tool was built using Streamlit, NetworkX, and Matplotlib. The goal was not only to implement the Red-Black Tree structure itself but also to create a user-friendly interface that allows users to interact with the tree by inserting nodes and visualizing how the tree adjusts itself after each operation.\nBy integrating explanations directly into the code, we aimed to make the algorithm more accessible to a broader audience, including those who might find tree rotations and balancing operations challenging to understand. This project aimed to bridge the gap between theoretical knowledge and practical visualization, enabling users to grasp the complexities of Red-Black Trees by visually observing their dynamics in real-time."
+    "text": "This project aims to create an interactive visualization tool for Red-Black Trees using Streamlit, NetworkX, and Matplotlib. It focuses on offering a clear, engaging experience to help users intuitively understand complex tree operations through real-time interaction and integrated explanations."
   },
   {
     "objectID": "about.html#features",
     "href": "about.html#features",
     "title": "About",
     "section": "Features",
-    "text": "Features\n\nInteractive Insertion: Insert values into the Red-Black Tree and see how the tree adjusts itself.\nStep-by-Step Insertion: Use a checkbox to visualize tree changes step by step for each insertion.\nIn-Order Traversal: View the in-order traversal of the tree to ensure it’s balanced and sorted."
+    "text": "Features\n\nInteractive Node Insertion\nDetailed Step Visualization\nIn-Order Traversal Checks"
   },
   {
     "objectID": "about.html#red-black-tree-visuals",
@@ -152,5 +152,54 @@
     "title": "About",
     "section": "Red-Black Tree Visuals",
     "text": "Red-Black Tree Visuals\nThe visualization is built using NetworkX and Matplotlib, with the following features: 1. Tree Structure: The tree is displayed with nodes and edges. Each node is labeled with its key, and the edges represent the parent-child relationships. 2. Node Colors: Nodes are colored based on their Red-Black Tree color (red or black). 3. Rotations and Balancing: As values are inserted, the visualization dynamically updates the tree to reflect any rotations or color changes needed to maintain balance."
+  },
+  {
+    "objectID": "tests.html#test_insert-1",
+    "href": "tests.html#test_insert-1",
+    "title": "Unit Testing for Red-Black Tree",
+    "section": "test_insert()",
+    "text": "test_insert()\n\nPurpose:\nValidates that inserting multiple values maintains both the binary-search‐tree order and the Red‑Black color invariants.\n\nChecks:\n\nOrder: Verifies that an in‑order traversal returns the sorted list [10, 20, 30].\n\nRoot color: Asserts that after all insertions, the root node is colored black ('black')."
+  },
+  {
+    "objectID": "tests.html#test-class-structure",
+    "href": "tests.html#test-class-structure",
+    "title": "Unit Testing for Red-Black Tree",
+    "section": "Test Class Structure",
+    "text": "Test Class Structure\n\nTestRedBlackTree\nInherits from unittest.TestCase.\n\ntest_insert\nA method within that class which sets up the tree, performs insertions, and asserts the expected outcomes."
+  },
+  {
+    "objectID": "tests.html#section",
+    "href": "tests.html#section",
+    "title": "Unit Testing for Red-Black Tree",
+    "section": ".",
+    "text": ".\nRan 1 test in 0.00Xs\nOK If something fails, unittest will print a detailed traceback and a “FAIL” summary."
+  },
+  {
+    "objectID": "tests.html#test_insert",
+    "href": "tests.html#test_insert",
+    "title": "Unit Testing for Red-Black Tree",
+    "section": "test_insert()",
+    "text": "test_insert()\n\nPurpose:\nValidates that inserting multiple values maintains both the binary-search‐tree order and the Red‑Black color invariants.\n\nChecks:\n\nOrder: Verifies that an in‑order traversal returns the sorted list [10, 20, 30].\n\nRoot color: Asserts that after all insertions, the root node is colored black ('black')."
+  },
+  {
+    "objectID": "visualization.html#visualize_treetree-1",
+    "href": "visualization.html#visualize_treetree-1",
+    "title": "Streamlit Visualization for Red‑Black Tree",
+    "section": "visualize_tree(tree)",
+    "text": "visualize_tree(tree)\n\nPurpose:\nConverts the Red‑Black Tree into a NetworkX graph and draws it in Streamlit using Matplotlib.\nSteps:\n\nGraph build:\n\nCalls tree.build_graph(G) to add each node (with its color) and each parent→child edge.\n\n\nEmpty‑tree check:\n\nIf there are no nodes, shows st.warning(\"Tree is empty!\") and returns.\n\n\nLayout:\n\nUses nx.spring_layout(G, seed=42) for a stable, force‑directed arrangement.\n\n\nDrawing:\n\nCreates a Matplotlib fig, ax with size 10×6.\n\nChooses node fill colors from the stored node['color'] attribute ('red' or 'black').\n\nCalls nx.draw(...) with white labels, black edges, no arrows, and bold fonts.\n\n\nRendering:\n\nEmbeds the figure in Streamlit with st.pyplot(fig).\n\nCloses the figure via plt.close(fig) to avoid memory buildup."
+  },
+  {
+    "objectID": "visualization.html#main",
+    "href": "visualization.html#main",
+    "title": "Streamlit Visualization for Red‑Black Tree",
+    "section": "main()",
+    "text": "main()\n\nTitle & Description:\n\nUses st.title and st.write to introduce the app.\n\nSession State Initialization:\n```python if ‘tree’ not in st.session_state: st.session_state.tree = RedBlackTree() if ‘steps’ not in st.session_state: st.session_state.steps = [] if ‘step_idx’ not in st.session_state: st.session_state.step_idx = 0"
+  },
+  {
+    "objectID": "about.html#visualization-highlights",
+    "href": "about.html#visualization-highlights",
+    "title": "About",
+    "section": "Visualization Highlights",
+    "text": "Visualization Highlights\nUsing NetworkX and Matplotlib to deliver clear visuals:\n\nDistinct node colors.\nReal-time rotation/balance animations.\nEasy-to-follow tree structures."
   }
 ]

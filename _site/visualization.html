@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Red-Black Tree Visualization - Visualizations</title>
+<title>Red-Black Tree Visualization - Streamlit Visualization for Red‑Black Tree</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -4511,7 +4511,7 @@ vertical-align: -.125em;
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./visualization.html" rel target aria-current="page">
- <span class="menu-text">Visualizations</span></a>
+ <span class="menu-text">Streamlit Visualization for Red‑Black Tree</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./conclusion.html" rel target>
@@ -4533,9 +4533,11 @@ vertical-align: -.125em;
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#importing-required-libraries" id="toc-importing-required-libraries" class="nav-link active" data-scroll-target="#importing-required-libraries">Importing Required Libraries</a></li>
-  <li><a href="#tree-visualization-function" id="toc-tree-visualization-function" class="nav-link" data-scroll-target="#tree-visualization-function">Tree Visualization Function</a></li>
-  <li><a href="#main-streamlit-app" id="toc-main-streamlit-app" class="nav-link" data-scroll-target="#main-streamlit-app">Main Streamlit App</a></li>
+  <li><a href="#streamlit-visualization-for-redblack-tree" id="toc-streamlit-visualization-for-redblack-tree" class="nav-link active" data-scroll-target="#streamlit-visualization-for-redblack-tree">Streamlit Visualization for Red‑Black Tree</a>
+  <ul class="collapse">
+  <li><a href="#visualize_treetree-1" id="toc-visualize_treetree-1" class="nav-link" data-scroll-target="#visualize_treetree-1"><code>visualize_tree(tree)</code></a></li>
+  <li><a href="#main" id="toc-main" class="nav-link" data-scroll-target="#main"><code>main()</code></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4544,7 +4546,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Visualizations</h1>
+<h1 class="title">Streamlit Visualization for Red‑Black Tree</h1>
 </div>
 
 
@@ -4559,159 +4561,133 @@ vertical-align: -.125em;
 
 </header>
 
-<div class="iframe-container">
-<iframe src="https://your-visualization-url.com" width="100%" height="500px" frameborder="0">
-</iframe>
-</div>
-<p>This file contains the code for visualizing the Red-Black Tree using <strong>Streamlit</strong> for the interactive interface and <strong>NetworkX</strong> for graphing the tree structure.</p>
 <section id="visualize_treetree" class="level4">
 <h4 class="anchored" data-anchor-id="visualize_treetree"><code>visualize_tree(tree)</code></h4>
+<p>Builds a NetworkX graph from the Red‑Black Tree and renders it in Streamlit using Matplotlib.<br>
+- <strong>Graph construction</strong>: Adds each node (key + color) and edges (parent→child).<br>
+- <strong>Layout</strong>: Uses <code>spring_layout</code> with a fixed seed for reproducible positioning.<br>
+- <strong>Rendering</strong>: Draws nodes red or black, white labels, and embeds the figure with <code>st.pyplot</code>.</p>
+<details>
+<summary>
+Click to view code
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> visualize_tree(tree):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.DiGraph()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    tree.build_graph(G)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> G.nodes:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        st.warning(<span class="st">&quot;Tree is empty!&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> nx.spring_layout(G, seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> [<span class="st">&#39;red&#39;</span> <span class="cf">if</span> G.nodes[n][<span class="st">&#39;color&#39;</span>]<span class="op">==</span><span class="st">&#39;red&#39;</span> <span class="cf">else</span> <span class="st">&#39;black&#39;</span> <span class="cf">for</span> n <span class="kw">in</span> G.nodes]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    nx.draw(G, pos, ax<span class="op">=</span>ax, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span>colors,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            node_size<span class="op">=</span><span class="dv">1500</span>, font_color<span class="op">=</span><span class="st">&#39;white&#39;</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>            edgecolors<span class="op">=</span><span class="st">&#39;black&#39;</span>, linewidths<span class="op">=</span><span class="dv">1</span>, arrows<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">&quot;Red‑Black Tree&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    st.pyplot(fig)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    plt.close(fig)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    st.title(<span class="st">&quot;Red‑Black Tree&quot;</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># persist state</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&#39;tree&#39;</span> <span class="kw">not</span> <span class="kw">in</span> st.session_state:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        st.session_state.tree <span class="op">=</span> RedBlackTree()</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> st.session_state.tree</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># input controls</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    val <span class="op">=</span> st.number_input(<span class="st">&quot;Value to insert&quot;</span>, min_value<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">1</span>, step<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    step_mode <span class="op">=</span> st.checkbox(<span class="st">&quot;Enable Step‑by‑Step&quot;</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    c1, c2 <span class="op">=</span> st.columns(<span class="dv">2</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> c1:</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> st.button(<span class="st">&quot;Insert&quot;</span>):</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            tree.insert(val)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> step_mode:</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>                tree.fix_insert(tree.last_inserted)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                <span class="co"># prime step generator</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                st.session_state.steps <span class="op">=</span> <span class="bu">list</span>(tree.fix_insert_steps(tree.last_inserted))</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                st.session_state.step_idx <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> c2:</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> step_mode <span class="kw">and</span> st.button(<span class="st">&quot;Next&quot;</span>):</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            idx <span class="op">=</span> st.session_state.step_idx</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> idx <span class="op">&lt;</span> <span class="bu">len</span>(st.session_state.steps):</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                action, node <span class="op">=</span> st.session_state.steps[idx]</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>                st.info(<span class="ss">f&quot;</span><span class="sc">{</span>action<span class="sc">}</span><span class="ss"> on </span><span class="sc">{</span>node<span class="sc">.</span>key<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                st.session_state.step_idx <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> st.button(<span class="st">&quot;Clear&quot;</span>):</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        st.session_state.tree <span class="op">=</span> RedBlackTree()</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    visualize_tree(tree)</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> st.button(<span class="st">&quot;Show In‑Order&quot;</span>):</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        st.write(tree.inorder_helper(tree.root))</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span><span class="op">==</span><span class="st">&#39;__main__&#39;</span>:</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    main()</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>details<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details></section>
+<section id="streamlit-visualization-for-redblack-tree" class="level1">
+<h1>Streamlit Visualization for Red‑Black Tree</h1>
+<section id="visualize_treetree-1" class="level2">
+<h2 class="anchored" data-anchor-id="visualize_treetree-1"><code>visualize_tree(tree)</code></h2>
 <ul>
-<li>This function generates a visual representation of the Red-Black Tree using <strong>NetworkX</strong> to create a directed graph.</li>
-<li>It uses <strong>Matplotlib</strong> to display the tree as a graph, where nodes represent tree elements, and edges represent the parent-child relationships.</li>
-<li>The tree is drawn with node labels, and we use a blue color for nodes.</li>
-</ul>
-</section>
-<section id="main" class="level4">
-<h4 class="anchored" data-anchor-id="main"><code>main()</code></h4>
+<li><p><strong>Purpose</strong>:<br>
+Converts the Red‑Black Tree into a NetworkX graph and draws it in Streamlit using Matplotlib.</p></li>
+<li><p><strong>Steps</strong>:</p>
+<ol type="1">
+<li><strong>Graph build</strong>:
 <ul>
-<li>The main function creates a Streamlit app that allows users to interact with the Red-Black Tree.</li>
-<li>Users can input values to insert into the tree, and the tree updates visually in real-time.</li>
-<li>The app also includes the following features:
-<ul>
-<li><strong>Insert Button</strong>: Inserts a new node into the Red-Black Tree and updates the visualization.</li>
-<li><strong>Step-by-Step Insertion</strong>: A checkbox that allows users to visualize each insertion step-by-step.</li>
-<li><strong>In-Order Traversal</strong>: A button to display the in-order traversal of the tree, showing the keys in sorted order.</li>
+<li>Calls <code>tree.build_graph(G)</code> to add each node (with its color) and each parent→child edge.<br>
+</li>
 </ul></li>
+<li><strong>Empty‑tree check</strong>:
+<ul>
+<li>If there are no nodes, shows <code>st.warning(&quot;Tree is empty!&quot;)</code> and returns.<br>
+</li>
+</ul></li>
+<li><strong>Layout</strong>:
+<ul>
+<li>Uses <code>nx.spring_layout(G, seed=42)</code> for a stable, force‑directed arrangement.<br>
+</li>
+</ul></li>
+<li><strong>Drawing</strong>:
+<ul>
+<li>Creates a Matplotlib <code>fig, ax</code> with size 10×6.<br>
+</li>
+<li>Chooses node fill colors from the stored <code>node[&#39;color&#39;]</code> attribute (<code>&#39;red&#39;</code> or <code>&#39;black&#39;</code>).<br>
+</li>
+<li>Calls <code>nx.draw(...)</code> with white labels, black edges, no arrows, and bold fonts.<br>
+</li>
+</ul></li>
+<li><strong>Rendering</strong>:
+<ul>
+<li>Embeds the figure in Streamlit with <code>st.pyplot(fig)</code>.<br>
+</li>
+<li>Closes the figure via <code>plt.close(fig)</code> to avoid memory buildup.</li>
+</ul></li>
+</ol></li>
 </ul>
 <hr>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .red_black_tree <span class="im">import</span> RedBlackTree</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> visualize_tree(tree):</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.DiGraph()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    tree.build_graph(G)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> nx.spring_layout(G)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    nx.draw(G, pos, with_labels<span class="op">=</span><span class="va">True</span>, node_size<span class="op">=</span><span class="dv">3000</span>, node_color<span class="op">=</span><span class="st">&#39;lightblue&#39;</span>, font_size<span class="op">=</span><span class="dv">10</span>, font_color<span class="op">=</span><span class="st">&#39;black&#39;</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">&quot;Red-Black Tree Visualization&quot;</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    st.title(<span class="st">&#39;Red-Black Tree Visualization&#39;</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    st.write(<span class="st">&quot;&quot;&quot;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">        This is an interactive Red-Black Tree visualization project. </span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">        You can insert values into the tree and watch how it balances and updates.</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;&quot;&quot;</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the Red-Black Tree instance</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> RedBlackTree()</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Input field for inserting values</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> st.number_input(<span class="st">&#39;Enter Value to Insert:&#39;</span>, min_value<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">0</span>, step<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Insert Button</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> st.button(<span class="st">&#39;Insert&#39;</span>):</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> value <span class="op">!=</span> <span class="dv">0</span>:</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            tree.insert(value)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            st.write(<span class="ss">f&quot;Value </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss"> inserted into the tree.&quot;</span>)</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            visualize_tree(tree)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>            st.write(<span class="st">&quot;Please enter a non-zero value.&quot;</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step-by-step visualization option</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    step <span class="op">=</span> st.checkbox(<span class="st">&#39;Enable Step-by-Step Insertion&#39;</span>, value<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> step:</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        st.write(<span class="st">&quot;Insert values step by step to visualize tree changes one by one.&quot;</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Show In-Order Traversal</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> st.button(<span class="st">&#39;Show In-Order Traversal&#39;</span>):</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        in_order <span class="op">=</span> tree.inorder_helper(tree.root)</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        st.write(<span class="ss">f&quot;In-Order Traversal: </span><span class="sc">{</span>in_order<span class="sc">}</span><span class="ss">&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </section>
-<section id="importing-required-libraries" class="level2">
-<h2 class="anchored" data-anchor-id="importing-required-libraries">Importing Required Libraries</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">import streamlit as st</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">import networkx as nx</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">import matplotlib.pyplot as plt</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">from .red_black_tree import RedBlackTree</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - <code>streamlit</code>: Used to create the web interface for user interaction. - <code>networkx</code>: Used to represent and manipulate the tree as a graph. - <code>matplotlib.pyplot</code>: Used for rendering the graph visually. - <code>red_black_tree</code>: Imports the Red-Black Tree class for managing the tree structure.</p>
-<hr>
-</section>
-<section id="tree-visualization-function" class="level2">
-<h2 class="anchored" data-anchor-id="tree-visualization-function">Tree Visualization Function</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">def visualize_tree(tree):</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    G = nx.DiGraph()</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">    tree.build_graph(G)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">    pos = nx.spring_layout(G)  # Positioning the nodes</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    plt.figure(figsize=(10, 6))</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">    nx.draw(G, pos, with_labels=True, node_size=3000, node_color=&#39;lightblue&#39;, font_size=10, font_color=&#39;black&#39;)</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">    plt.title(&quot;Red-Black Tree Visualization&quot;)</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">    plt.show()</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - This function generates a visual representation of the Red-Black Tree. - It uses NetworkX to build a graph and matplotlib to render it with labeled nodes and a styled layout.</p>
-<hr>
-</section>
-<section id="main-streamlit-app" class="level2">
-<h2 class="anchored" data-anchor-id="main-streamlit-app">Main Streamlit App</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">def main():</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    st.title(&#39;Red-Black Tree Visualization&#39;)</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    st.write(&quot;&quot;&quot;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        This <span class="kw">is</span> an interactive Red<span class="op">-</span>Black Tree visualization project. </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        You can insert values into the tree <span class="kw">and</span> watch how it balances <span class="kw">and</span> updates.</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;)</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">    tree = RedBlackTree()</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">    value = st.number_input(&#39;Enter Value to Insert:&#39;, min_value=1, value=0, step=1)</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">    if st.button(&#39;Insert&#39;):</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">        if value != 0:</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">            tree.insert(value)</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">            st.write(f&quot;Value {value} inserted into the tree.&quot;)</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">            visualize_tree(tree)</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">        else:</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">            st.write(&quot;Please enter a non-zero value.&quot;)</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">    step = st.checkbox(&#39;Enable Step-by-Step Insertion&#39;, value=False)</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">    if step:</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">        st.write(&quot;Insert values step by step to visualize tree changes one by one.&quot;)</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">    if st.button(&#39;Show In-Order Traversal&#39;):</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">        in_order = tree.inorder_helper(tree.root)</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">        st.write(f&quot;In-Order Traversal: {in_order}&quot;)</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - This function creates a complete Streamlit app that lets users interactively build and visualize a Red-Black Tree. - Users can insert values, choose to see the tree change step-by-step, and view an in-order traversal.</p>
+<section id="main" class="level2">
+<h2 class="anchored" data-anchor-id="main"><code>main()</code></h2>
+<ul>
+<li><strong>Title &amp; Description</strong>:
+<ul>
+<li>Uses <code>st.title</code> and <code>st.write</code> to introduce the app.</li>
+</ul></li>
+<li><strong>Session State Initialization</strong>:<br>
+```python if ‘tree’ not in st.session_state: st.session_state.tree = RedBlackTree() if ‘steps’ not in st.session_state: st.session_state.steps = [] if ‘step_idx’ not in st.session_state: st.session_state.step_idx = 0</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

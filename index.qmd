@@ -4,4 +4,6 @@ title: "Red-Black Tree Visualization Project"
 
 ## Overview
 
-This project provides an interactive Red-Black Tree visualization using **Streamlit**, **NetworkX**, and **Matplotlib**. A Red-Black Tree is a type of self-balancing binary search tree that ensures efficient searching, insertion, and deletion operations. This project focuses on helping users understand Red-Black Trees by visualizing their operations step-by-step, including insertions, rotations, and balancing.
+This project delivers an interactive Red‑Black Tree visualization using **Streamlit**, **NetworkX**, and **Matplotlib**. A Red‑Black Tree is a self‑balancing binary search tree that guarantees \(O(\log n)\) time complexity for searches, insertions, and deletions by enforcing simple color and rotation rules. The visualization highlights each insertion, rotation, and recoloring step in real time, clarifying how the tree restores its red‑black properties and maintains balance.
+
+![A balanced red‑black tree](Red-black_tree_example.svg)

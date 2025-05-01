@@ -4474,7 +4474,6 @@ vertical-align: -.125em;
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -4496,7 +4495,7 @@ vertical-align: -.125em;
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html" rel target>
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Home <i class="fas fa-home"></i></span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html" rel target>
@@ -4512,7 +4511,7 @@ vertical-align: -.125em;
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./visualization.html" rel target>
- <span class="menu-text">Visualizations</span></a>
+ <span class="menu-text">Streamlit Visualization for Red‑Black Tree</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./conclusion.html" rel target>
@@ -4534,16 +4533,11 @@ vertical-align: -.125em;
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#red-black-tree-implementation" id="toc-red-black-tree-implementation" class="nav-link active" data-scroll-target="#red-black-tree-implementation">Red-Black Tree Implementation</a>
-  <ul class="collapse">
-  <li><a href="#redblacknode-class-1" id="toc-redblacknode-class-1" class="nav-link" data-scroll-target="#redblacknode-class-1">RedBlackNode Class</a></li>
-  <li><a href="#redblacktree-constructor" id="toc-redblacktree-constructor" class="nav-link" data-scroll-target="#redblacktree-constructor">RedBlackTree Constructor</a></li>
-  <li><a href="#left-and-right-rotations" id="toc-left-and-right-rotations" class="nav-link" data-scroll-target="#left-and-right-rotations">Left and Right Rotations</a></li>
+  <li><a href="#left-and-right-rotations" id="toc-left-and-right-rotations" class="nav-link active" data-scroll-target="#left-and-right-rotations">Left and Right Rotations</a></li>
   <li><a href="#fixing-insertions" id="toc-fixing-insertions" class="nav-link" data-scroll-target="#fixing-insertions">Fixing Insertions</a></li>
   <li><a href="#inserting-a-node" id="toc-inserting-a-node" class="nav-link" data-scroll-target="#inserting-a-node">Inserting a Node</a></li>
   <li><a href="#in-order-traversal" id="toc-in-order-traversal" class="nav-link" data-scroll-target="#in-order-traversal">In-Order Traversal</a></li>
   <li><a href="#building-the-graph-for-visualization" id="toc-building-the-graph-for-visualization" class="nav-link" data-scroll-target="#building-the-graph-for-visualization">Building the Graph for Visualization</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4567,15 +4561,25 @@ vertical-align: -.125em;
 
 </header>
 
-<section id="red-black-tree-implementation" class="level1">
-<h1>Red-Black Tree Implementation</h1>
 <section id="redblacknode-class" class="level4">
 <h4 class="anchored" data-anchor-id="redblacknode-class"><code>RedBlackNode</code> class</h4>
-<p>The <code>RedBlackNode</code> class represents a node in the Red-Black Tree. Each node has: - <code>key</code>: the value stored in the node. - <code>color</code>: the node’s color, either ‘red’ or ‘black’. - <code>left</code>, <code>right</code>: pointers to the left and right children. - <code>parent</code>: pointer to the node’s parent.</p>
+<p>The <code>RedBlackNode</code> class represents a single node in the tree. Each node stores: - <strong><code>key</code></strong>: the integer value held by the node.<br>
+- <strong><code>color</code></strong>: either <code>&#39;red&#39;</code> or <code>&#39;black&#39;</code>, used to enforce balancing rules.<br>
+- <strong><code>left</code>, <code>right</code></strong>: references to child nodes (or sentinel <code>TNULL</code>).<br>
+- <strong><code>parent</code></strong>: reference to the parent node.</p>
+<hr>
 </section>
 <section id="redblacktree-class" class="level4">
 <h4 class="anchored" data-anchor-id="redblacktree-class"><code>RedBlackTree</code> class</h4>
-<p>This class implements the Red-Black Tree. It includes several methods to manage the tree: - <strong><code>insert(key)</code></strong>: Inserts a new node with the specified key into the tree, maintaining the Red-Black Tree properties. It uses rotations and color changes to keep the tree balanced. - <strong><code>rotate_left(x)</code> and <code>rotate_right(x)</code></strong>: Perform left and right rotations to maintain the tree’s balance during insertion. - <strong><code>fix_insert(k)</code></strong>: This method ensures the Red-Black Tree properties are maintained after insertion by fixing violations using rotations and color changes. - <strong><code>inorder_helper(node)</code></strong>: A helper function to perform an in-order traversal of the tree, returning a sorted list of keys. - <strong><code>build_graph(G)</code></strong>: Builds a graph representation of the tree, which will be visualized later using <code>NetworkX</code>.</p>
+<p>The <code>RedBlackTree</code> encapsulates all operations for insertion, balancing, traversal, and graph building. Key methods include:</p>
+<ul>
+<li><p><strong><strong>init</strong>()</strong>: initializes the tree with a sentinel leaf TNULL colored black and sets root = TNULL.</p></li>
+<li><p><strong>insert(key)</strong>: standard BST insert (new node colored red) followed by a call to fix_insert to restore Red‑Black properties.</p></li>
+<li><p><strong>fix_insert(k)</strong>: enforces Red‑Black invariants after insertion using recoloring and rotations.</p></li>
+<li><p><strong>rotate_left(x)</strong> / rotate_right(x): atomic tree rotations preserving BST order.</p></li>
+<li><p><strong>inorder_helper(node)</strong>: returns a sorted list of keys via in‑order traversal.</p></li>
+<li><p>**build_graph(G) &amp; _build_graph_helper(node, G)**: constructs a NetworkX graph for visualization.</p></li>
+</ul>
 <details>
 <summary>
 Click to view code
@@ -4720,201 +4724,36 @@ Click to view code
 </details>
 <hr>
 </section>
-<section id="redblacknode-class-1" class="level2">
-<h2 class="anchored" data-anchor-id="redblacknode-class-1">RedBlackNode Class</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">class RedBlackNode:</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    def __init__(self, key):</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">        self.key = key</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">        self.color = &#39;red&#39;  # New nodes are red initially</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">        self.left = None</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">        self.right = None</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">        self.parent = None</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<hr>
-</section>
-<section id="redblacktree-constructor" class="level2">
-<h2 class="anchored" data-anchor-id="redblacktree-constructor">RedBlackTree Constructor</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">class RedBlackTree:</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    def __init__(self):</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">        self.TNULL = RedBlackNode(0)  # Sentinel node (used for leaves)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">        self.TNULL.color = &#39;black&#39;    # The sentinel node is always black</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">        self.root = self.TNULL         # Root is initially set to TNULL</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - The <code>RedBlackTree</code> class is the main structure that implements the Red-Black Tree. - It includes a sentinel node, <code>TNULL</code>, which is used for all leaf nodes in the tree. This node is always colored black. - The <code>root</code> is initialized as <code>TNULL</code>, meaning that the tree is empty when first created.</p>
-<hr>
-</section>
 <section id="left-and-right-rotations" class="level2">
 <h2 class="anchored" data-anchor-id="left-and-right-rotations">Left and Right Rotations</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">    def rotate_left(self, x):</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">        y = x.right</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">        x.right = y.left</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">        if y.left != self.TNULL:</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">            y.left.parent = x</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">        y.parent = x.parent</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">        if x.parent == None:</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">            self.root = y</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">        elif x == x.parent.left:</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">            x.parent.left = y</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">        else:</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">            x.parent.right = y</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">        y.left = x</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">        x.parent = y</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - This method performs a <strong>left rotation</strong> on a given node <code>x</code>. - After the rotation, the original node <code>x</code> becomes the left child of its right child <code>y</code>, and <code>y</code> becomes the parent of <code>x</code>.</p>
+<p><strong>rotate_left(x) / rotate_right(x)</strong></p>
+<p>These methods perform local rotations to restore tree balance while preserving in-order key order. Left rotation pivots x with its right child; right rotation pivots with the left child.</p>
 <hr>
 </section>
 <section id="fixing-insertions" class="level2">
 <h2 class="anchored" data-anchor-id="fixing-insertions">Fixing Insertions</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">    def fix_insert(self, k):</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">        while k.parent.color == &#39;red&#39;:</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">            if k.parent == k.parent.parent.left:</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">                u = k.parent.parent.right</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">                if u.color == &#39;red&#39;:</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">                    u.color = &#39;black&#39;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">                    k.parent.color = &#39;black&#39;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">                    k.parent.parent.color = &#39;red&#39;</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">                    k = k.parent.parent</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">                else:</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">                    if k == k.parent.right:</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">                        k = k.parent</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">                        self.rotate_left(k)</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">                    k.parent.color = &#39;black&#39;</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">                    k.parent.parent.color = &#39;red&#39;</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">                    self.rotate_right(k.parent.parent)</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">            else:</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">                u = k.parent.parent.left</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">                if u.color == &#39;red&#39;:</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">                    u.color = &#39;black&#39;</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">                    k.parent.color = &#39;black&#39;</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">                    k.parent.parent.color = &#39;red&#39;</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">                    k = k.parent.parent</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">                else:</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">                    if k == k.parent.left:</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">                        k = k.parent</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">                        self.rotate_right(k)</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">                    k.parent.color = &#39;black&#39;</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">                    k.parent.parent.color = &#39;red&#39;</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">                    self.rotate_left(k.parent.parent)</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">            if k == self.root:</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">                break</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">        self.root.color = &#39;black&#39;</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - Fixes violations of Red-Black Tree properties after an insertion by performing color changes and rotations.</p>
+<p><strong>fix_insert(k)</strong></p>
+<p>After inserting a red node, fix_insert traverses up, fixing red-red violations through recoloring or rotations until the tree satisfies all Red-Black properties</p>
 <hr>
 </section>
 <section id="inserting-a-node" class="level2">
 <h2 class="anchored" data-anchor-id="inserting-a-node">Inserting a Node</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">    def insert(self, key):</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">        node = RedBlackNode(key)</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">        node.parent = None</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">        node.key = key</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">        node.left = self.TNULL</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">        node.right = self.TNULL</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">        node.color = &#39;red&#39;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">        y = None</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">        x = self.root</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">        while x != self.TNULL:</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">            y = x</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">            if node.key &lt; x.key:</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">                x = x.left</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">            else:</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">                x = x.right</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">        node.parent = y</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">        if y == None:</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">            self.root = node</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">        elif node.key &lt; y.key:</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">            y.left = node</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">        else:</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">            y.right = node</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">        if node.parent == None:</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">            node.color = &#39;black&#39;</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">            return</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">        if node.parent.parent == None:</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">            return</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">        self.fix_insert(node)</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - This function inserts a new node in the tree and then fixes any Red-Black Tree violations caused by the insertion.</p>
+<p><strong>insert(key)</strong></p>
+<p>Performs a standard BST insert, marks the new node red, then calls fix_insert so the tree remains balanced.</p>
 <hr>
 </section>
 <section id="in-order-traversal" class="level2">
 <h2 class="anchored" data-anchor-id="in-order-traversal">In-Order Traversal</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">    def inorder_helper(self, node):</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">        if node == self.TNULL:</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">            return []</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">        return self.inorder_helper(node.left) + [node.key] + self.inorder_helper(node.right)</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - Performs an in-order traversal and returns a list of node keys in sorted order.</p>
+<p><strong>inorder_helper(node)</strong></p>
+<p>Recursively collects node keys in sorted order via in-order traversal.</p>
 <hr>
 </section>
 <section id="building-the-graph-for-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="building-the-graph-for-visualization">Building the Graph for Visualization</h2>
-<details>
-<summary>
-Click to view code
-</summary>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">    def build_graph(self, G):</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">        if self.root == self.TNULL:</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">            return</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">        self._build_graph_helper(self.root, G)</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    def _build_graph_helper(self, node, G):</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">        if node == self.TNULL:</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">            return</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">        if node.left != self.TNULL:</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">            G.add_edge(node.key, node.left.key)</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">        if node.right != self.TNULL:</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">            G.add_edge(node.key, node.right.key)</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">        self._build_graph_helper(node.left, G)</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">        self._build_graph_helper(node.right, G)</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<p><strong>Explanation</strong>: - Recursively builds a NetworkX graph from the tree for visualization purposes.</p>
+<p>**build_graph(G) &amp; _build_graph_helper(node, G)**</p>
+<p>Depth-first walk that builds a NetworkX graph, tagging each node with its color for visualization.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
